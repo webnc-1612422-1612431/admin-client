@@ -16147,9 +16147,9 @@ textarea[resize="horizontal"] {
   font-size: 3.25rem;
 }
 
-.icon-lg+.icon-text {
+/* .icon-lg+.icon-text {
   width: calc(100% - $icon-size-lg - 1);
-}
+} */
 
 .icon-sm {
   width: 2rem;
