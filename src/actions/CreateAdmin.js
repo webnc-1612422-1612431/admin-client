@@ -26,7 +26,7 @@ function fetchCreateAdmin(user) {
     return dispatch => {
         dispatch(CreateAdminPending());
         return axios
-            .post(`http://localhost:4000/createadmin`, {
+            .post(`https://adminserver-422-431.herokuapp.com/createadmin`, {
                 user
             },
                 {

@@ -28,7 +28,7 @@ function fetchLogin(email, password) {
   return dispatch => {
     dispatch(LoginPending());
     return axios
-      .post(`http://localhost:4000/admin/login`, {
+      .post(`https://adminserver-422-431.herokuapp.com/admin/login`, {
         email,
         password
       })
