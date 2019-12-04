@@ -1,5 +1,4 @@
 import * as types from '../constants/ActionTypes';
-import { statement } from '@babel/template';
 
 const initialState = GetInitialState();
 

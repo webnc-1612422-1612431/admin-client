@@ -10,8 +10,6 @@ import "../assets/js/plugins/nucleo/css/nucleo.css";
 import "../assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css";
 import "../assets/css/argon-dashboard.css";
 
-const ls = require('localStorage');
-
 class CreateAdminView extends React.Component {
     handleSubmit = e => {
         e.preventDefault();

@@ -71,7 +71,7 @@ class LoginView extends React.Component {
             </div>
   
             <div className="text-center p-t-12">
-              <a className="txt2" href="#">
+              <a className="txt2" href="">
               Forgot Username / Password?
               </a>
             </div>

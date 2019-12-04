@@ -10,7 +10,6 @@ import { createLogger } from 'redux-logger'
 
 import rootReducer from './reducers'
 import * as serviceWorker from './serviceWorker';
-import LoginView from './components/LoginView';
 
 const middleware = [thunk];
 
