@@ -1,20 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import "./assets/css/argon-dashboard.css?v=1.1.0";
 import "./assets/js/plugins/nucleo/css/nucleo.css";
 import "./assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css";
-// import { connect } from 'react-redux';
-// import Navbar from 'react-bootstrap/Navbar';
-// import Nav from 'react-bootstrap/Nav';
-// import Game from './components/Game';
-// import LoginView from './components/LoginView';
-// import RegisterView from './components/RegisterView';
 
-// import * as action from './actions/Game';
 import './App.css';
 import LoginView from './components/LoginView'
 import Dashboard from './components/Dashboard';
-import { connect } from 'react-redux';
+
 import CreateAdminView from './components/CreateAdminView';
 
 
