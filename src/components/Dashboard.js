@@ -16,7 +16,7 @@ class Dashboard extends React.Component {
     }
 
     render() {
-        return (<div class="main-content">Dashboard: Click Create new admin!</div>);
+        return (<div className="main-content">Dashboard: Click Create new admin!</div>);
     }
 };
 

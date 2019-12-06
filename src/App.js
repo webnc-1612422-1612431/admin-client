@@ -8,9 +8,8 @@ import "./assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css";
 import './App.css';
 import LoginView from './components/LoginView'
 import Dashboard from './components/Dashboard';
-
 import CreateAdminView from './components/CreateAdminView';
-
+import UsersView from './components/UsersView';
 
 const ls = require('localStorage');
 
@@ -45,6 +44,11 @@ class App extends React.Component {
                     <i class="ni ni-user-run text-blue"></i> Create new admin
             </Link>
                 </li>
+                <li class="nav-item">
+                  <Link class="nav-link " to="/users">
+                    <i class="ni ni-user-run text-blue"></i> User
+            </Link>
+                </li>
 
                 <li class="nav-item" onClick={this.handleLogout}>
                   <Link class="nav-link " >
@@ -71,6 +75,9 @@ class App extends React.Component {
           <Route exact path="/dashboard">
             <Dashboard />
           </Route>
+          <Route exact path="/users">
+            <UsersView />
+          </Route>
           <Route exact path="/">
             <Dashboard />
           </Route>
@@ -86,7 +93,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    
+
   };
 };
 

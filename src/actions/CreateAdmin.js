@@ -26,12 +26,12 @@ function fetchCreateAdmin(user) {
     return dispatch => {
         dispatch(CreateAdminPending());
         return axios
-            .post(`https://adminserver-422-431.herokuapp.com/createadmin`, {
+            .post(`https://locahost:4000/createadmin`, {
                 user
             },
                 {
                     headers: {
-                        Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).token,
+                        Authorization: `Bearer ${  JSON.parse(localStorage.getItem('user')).token}`,
                     }
                 }
             )

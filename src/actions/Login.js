@@ -1,5 +1,5 @@
 import axios from 'axios';
-import * as types from '../constants/ActionTypes'
+import * as types from '../constants/ActionTypes';
 
 const localStorage = require('localStorage');
 
@@ -28,7 +28,7 @@ function fetchLogin(email, password) {
   return dispatch => {
     dispatch(LoginPending());
     return axios
-      .post(`https://adminserver-422-431.herokuapp.com/admin/login`, {
+      .post(`http://localhost:4000/admin/login`, {
         email,
         password
       })
@@ -48,7 +48,7 @@ function fetchLogin(email, password) {
         dispatch(LoginSuccess(res.data.user));
         return true;
       })
-      .catch(error => {
+      .catch(() => {
         dispatch(LoginFail("Đăng nhập thất bại"));
         return false;
       });
