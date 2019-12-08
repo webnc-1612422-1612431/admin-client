@@ -23,3 +23,7 @@
   color: #09d3ac;
 }
 
+tr:hover {
+  background: #a3abff;
+  cursor: pointer;
+}

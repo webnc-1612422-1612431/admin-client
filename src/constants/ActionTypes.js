@@ -10,3 +10,6 @@ export const CREATE_ADMIN_FAIL = 'CREATE_ADMIN_FAIL';
 
 // Logout
 export const LOGOUT = 'LOGOUT';
+
+// List Users
+export const LIST_USERS = 'LIST_USERS';

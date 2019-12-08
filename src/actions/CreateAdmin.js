@@ -1,5 +1,6 @@
 import axios from 'axios';
 import * as types from '../constants/ActionTypes';
+import domain from '../constants/config';
 
 const localStorage = require('localStorage');
 
@@ -26,7 +27,7 @@ function fetchCreateAdmin(user) {
     return dispatch => {
         dispatch(CreateAdminPending());
         return axios
-            .post(`https://locahost:4000/createadmin`, {
+            .post(`${domain['server-domain']}/createadmin`, {
                 user
             },
                 {

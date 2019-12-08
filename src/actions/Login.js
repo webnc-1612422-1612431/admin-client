@@ -1,5 +1,6 @@
 import axios from 'axios';
 import * as types from '../constants/ActionTypes';
+import domain from '../constants/config';
 
 const localStorage = require('localStorage');
 
@@ -28,7 +29,7 @@ function fetchLogin(email, password) {
   return dispatch => {
     dispatch(LoginPending());
     return axios
-      .post(`http://localhost:4000/admin/login`, {
+      .post(`${domain['server-domain']}/admin/login`, {
         email,
         password
       })

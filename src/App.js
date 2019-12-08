@@ -1,59 +1,63 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import "./assets/css/argon-dashboard.css?v=1.1.0";
-import "./assets/js/plugins/nucleo/css/nucleo.css";
-import "./assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css";
+import './assets/js/plugins/nucleo/css/nucleo.css';
+import './assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css';
 
 import './App.css';
-import LoginView from './components/LoginView'
+import LoginView from './components/LoginView';
 import Dashboard from './components/Dashboard';
 import CreateAdminView from './components/CreateAdminView';
 import UsersView from './components/UsersView';
+import UserInfoView from './components/UserInfoView';
 
 const ls = require('localStorage');
 
 class App extends React.Component {
   handleLogout = () => {
-    alert('abc');
     ls.removeItem('user');
     window.location.href = '/login';
   };
 
   render() {
-
     const component = [];
     const user = ls.getItem('user');
     if (user != null) {
       component.push(
-        <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
-          <div class="container-fluid">
-
-            <Link class="navbar-brand pt-0" to="/dashboard">
-              <img src="logo.png" class="navbar-brand-img" alt="..." />
+        <nav key="nav"
+          className="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
+          id="sidenav-main"
+        >
+          <div className="container-fluid">
+            <Link className="navbar-brand pt-0" to="/dashboard" key="link1">
+              <img src="logo.png" className="navbar-brand-img" alt="..." />
             </Link>
-            <div class="collapse navbar-collapse" id="sidenav-collapse-main">
-
-              <ul class="navbar-nav">
-                <li class="nav-item  class=" active>
-                  <Link class=" nav-link active " to="/dashboard" > <i class="ni ni-tv-2 text-primary"></i> Dashboard
-            </Link>
+            <div className="collapse navbar-collapse" id="sidenav-collapse-main">
+              <ul className="navbar-nav">
+                <li className="nav-item " key="dashboad">
+                  <Link className=" nav-link active" to="/dashboard" key="link2">
+                    {' '}
+                    <i className="ni ni-tv-2 text-primary"/> Dashboard
+                  </Link>
                 </li>
-                <li class="nav-item">
-                  <Link class="nav-link " to="/createadmin">
-                    <i class="ni ni-user-run text-blue"></i> Create new admin
-            </Link>
+                <li className="nav-item true" key="createadmin">
+                  <Link className="nav-link " to="/createadmin" key="link3">
+                    <i className="ni ni-user-run text-blue"/> Create new admin
+                  </Link>
                 </li>
-                <li class="nav-item">
-                  <Link class="nav-link " to="/users">
-                    <i class="ni ni-user-run text-blue"></i> User
-            </Link>
+                <li className="nav-item" key="users">
+                  <Link className="nav-link " to="/users" key="link4">
+                    <i className="ni ni-user-run text-blue"/> User
+                  </Link>
                 </li>
 
-                <li class="nav-item" onClick={this.handleLogout}>
-                  <Link class="nav-link " >
-                    <i class="ni ni-button-power text-blue"></i> Logout
-            </Link>
+                <li className="nav-item" onClick={this.handleLogout} key="logout">
+                  <Link className="nav-link" key="link5">
+                    <i className="ni ni-button-power text-blue"/> Logout
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -78,6 +82,9 @@ class App extends React.Component {
           <Route exact path="/users">
             <UsersView />
           </Route>
+          <Route exact path="/userInfo/:row">
+            <UserInfoView />
+          </Route>
           <Route exact path="/">
             <Dashboard />
           </Route>
@@ -91,14 +98,11 @@ const mapStateToProps = state => ({
   AdminState: state.AdminReducer
 });
 
-const mapDispatchToProps = dispatch => {
-  return {
-
-  };
+const mapDispatchToProps = () => {
+  return {};
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(App);
-
