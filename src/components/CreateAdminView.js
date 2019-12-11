@@ -10,7 +10,17 @@ import "../assets/js/plugins/nucleo/css/nucleo.css";
 import "../assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css";
 import "../assets/css/argon-dashboard.css";
 
+const localStorage = require('localStorage');
+
 class CreateAdminView extends React.Component {
+
+    constructor(props) {
+        super(props);
+        if (localStorage.getItem('user') === null) {
+            window.location.href = '/login';
+        }
+    }
+
     handleSubmit = e => {
         e.preventDefault();
         const { fetchCreateAdmin, history } = this.props;
