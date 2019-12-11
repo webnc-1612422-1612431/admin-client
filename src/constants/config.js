@@ -9,5 +9,5 @@ const remote = {
     'server-domain': 'https://adminserver-422-431.herokuapp.com'
 };
 
-export default local;
+export default remote;
 
