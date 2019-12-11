@@ -13,3 +13,14 @@ export const LOGOUT = 'LOGOUT';
 
 // List Users
 export const LIST_USERS = 'LIST_USERS';
+
+// List Skills
+export const LIST_SKILLS_SUCCESS = 'LIST_SKILLS_SUCCESS';
+export const LIST_SKILLS_PENDING = 'LIST_SKILLS_PENDING';
+export const LIST_SKILLS_FAIL = 'LIST_SKILLS_FAIL';
+
+// Add skills
+export const ADD_NEW_SKILL = 'ADD_NEW_SKILL';
+
+export const UPDATE_STATUS_SKILL = 'UPDATE_STATUS_SKILL';
+export const UPDATE_SKILL_NAME = 'UPDATE_SKILL_NAME';

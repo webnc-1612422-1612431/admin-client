@@ -13,6 +13,7 @@ import Dashboard from './components/Dashboard';
 import CreateAdminView from './components/CreateAdminView';
 import UsersView from './components/UsersView';
 import UserInfoView from './components/UserInfoView';
+import SkillsView from './components/SkillsView';
 
 const ls = require('localStorage');
 
@@ -50,12 +51,18 @@ class App extends React.Component {
                 </li>
                 <li className="nav-item" key="users">
                   <Link className="nav-link " to="/users" key="link4">
-                    <i className="ni ni-user-run text-blue"/> User
+                    <i className="ni ni-user-run text-blue"/> Users
+                  </Link>
+                </li>
+
+                <li className="nav-item" key="users">
+                  <Link className="nav-link " to="/skills" key="link5">
+                    <i className="ni ni-user-run text-blue"/> Skills
                   </Link>
                 </li>
 
                 <li className="nav-item" onClick={this.handleLogout} key="logout">
-                  <Link className="nav-link" key="link5">
+                  <Link className="nav-link" key="link6">
                     <i className="ni ni-button-power text-blue"/> Logout
                   </Link>
                 </li>
@@ -84,6 +91,9 @@ class App extends React.Component {
           </Route>
           <Route exact path="/userInfo/:row">
             <UserInfoView />
+          </Route>
+          <Route exact path="/skills">
+            <SkillsView />
           </Route>
           <Route exact path="/">
             <Dashboard />
