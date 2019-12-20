@@ -4,7 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { fetchListUsers } from '../actions/Users';
+import { fetchListUsers, changePage } from '../actions/Users';
 
 import '../App.css';
 import '../assets/js/plugins/nucleo/css/nucleo.css';
@@ -23,17 +23,29 @@ class UsersView extends React.Component {
   }
 
   rowHandleClick = row => {
-    const {history} = this.props;
-    history.push(`/userInfo/${  row}`);
+    const { history } = this.props;
+    history.push(`/userInfo/${row}`);
   };
+
+  handleClickPage = page => {
+    const {fetchChangePage} = this.props;
+    fetchChangePage(page);
+  }
 
   render() {
     const { UsersState, AdminState } = this.props;
-    const { users } = UsersState;
+    const { users, page } = UsersState;
     const { user } = AdminState;
     const tableContent = [];
+    const pagination = [];
 
-    for (let i = 0; i < users.length; i += 1) {
+    if (page === users.length/5 + 1){
+      this.end = users.length;
+    } else {
+      this.end = 5*page - 1;
+    }
+
+    for (let i = 5*(page - 1); i < this.end; i += 1) {
       tableContent.push(
         <tr onClick={this.rowHandleClick.bind(this, i)}>
           <th scope="row">
@@ -69,6 +81,16 @@ class UsersView extends React.Component {
       );
     }
 
+    for (let i = 0; i < users.length / 5 + 1; i += 1) {
+      pagination.push(
+        <li className="page-item active">
+          <button className="page-link" type="button" onClick={this.handleClickPage.bind(this, i)}>
+            {i + 1}
+          </button>
+        </li>
+      );
+    }
+
     return (
       <div className="main-content">
         <nav
@@ -94,7 +116,7 @@ class UsersView extends React.Component {
                 >
                   <div className="media align-items-center">
                     <span className="avatar avatar-sm rounded-circle">
-                      {/* <img alt="Image placeholder" src="../assets/img/theme/team-4-800x800.jpg" /> */}
+                      <img alt="Placeholder" src={user.avatar} />
                     </span>
                     <div className="media-body ml-2 d-none d-lg-block">
                       <span className="mb-0 text-sm  font-weight-bold">
@@ -148,21 +170,7 @@ class UsersView extends React.Component {
                           <span className="sr-only">Previous</span>
                         </a>
                       </li>
-                      <li className="page-item active">
-                        <a className="page-link" href="/">
-                          1
-                        </a>
-                      </li>
-                      <li className="page-item">
-                        <a className="page-link" href="/">
-                          2 <span className="sr-only">(current)</span>
-                        </a>
-                      </li>
-                      <li className="page-item">
-                        <a className="page-link" href="/">
-                          3
-                        </a>
-                      </li>
+                      {pagination}
                       <li className="page-item">
                         <a className="page-link" href="/">
                           <i className="fas fa-angle-right" />
@@ -234,7 +242,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      fetchListUsersAction: fetchListUsers
+      fetchListUsersAction: fetchListUsers,
+      fetchChangePage: changePage
     },
     dispatch
   );

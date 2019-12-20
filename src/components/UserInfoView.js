@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { fetchListUsers } from '../actions/Users';
+import { fetchListUsers, updateUserState } from '../actions/Users';
 
 import '../App.css';
 import '../assets/js/plugins/nucleo/css/nucleo.css';
@@ -17,22 +17,21 @@ class UserInfoView extends React.Component {
     const { users } = UsersState;
     if (users.length === 0) {
       console.log(users.length);
-      history.push('/users');
+      history.push('/');
     }
   }
 
-  //   rowHandleClick = i => {
-  // const {history} = this.props;
-  // history.push(`/users/${  i}`);
-  // window.location.href = `a${i}`;
-  // console.log(i);
-  //   };
+  hanleUpdateState = (id,state) => {
+    const {fetchUpdateUserState, fetchListUsersAction} = this.props;
+    Promise.resolve(fetchUpdateUserState(id, state ? 0 : 1)).then(() => {
+          fetchListUsersAction();
+    });
+  }
 
   render() {
     const { AdminState, UsersState, match } = this.props;
     const { user } = AdminState;
     const { users } = UsersState;
-
     const { row } = match.params;
     const userInfomation = users[row];
 
@@ -61,7 +60,7 @@ class UserInfoView extends React.Component {
                 >
                   <div className="media align-items-center">
                     <span className="avatar avatar-sm rounded-circle">
-                      {/* <img alt="Image placeholder" src="../assets/img/theme/team-4-800x800.jpg" /> */}
+                      <img alt="Placeholder" src={user.avatar} />
                     </span>
                     <div className="media-body ml-2 d-none d-lg-block">
                       <span className="mb-0 text-sm  font-weight-bold">
@@ -106,14 +105,32 @@ class UserInfoView extends React.Component {
                 </div>
                 <div className="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
                   <div className="d-flex justify-content-between">
-                    <a href="/" className="btn btn-sm btn-default float-right">
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-default float-right"
+                    >
                       Message
-                    </a>
+                    </button>
+
+                    {userInfomation.state ? (
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-danger float-right"
+                        onClick={this.hanleUpdateState.bind(this, userInfomation.id, userInfomation.state)}>
+                        Inactive
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-success float-right"
+                        onClick={this.hanleUpdateState.bind(this, userInfomation.id, userInfomation.state)}>
+                        Active
+                      </button>
+                    )}
                   </div>
                 </div>
 
                 <div className="card-body pt-0 pt-md-4">
-
                   <div className="row">
                     <div className="col">
                       <div className="card-profile-stats d-flex justify-content-center mt-md-5">
@@ -135,7 +152,6 @@ class UserInfoView extends React.Component {
                     </div>
                   </div>
                   <div className="text-center">
-                    
                     <div className="h5 mt-4">
                       <i className="ni business_briefcase-24 mr-2" />
                       {userInfomation.major}
@@ -155,7 +171,9 @@ class UserInfoView extends React.Component {
                     <div className="col-8">
                       <h3 className="mb-0">My account</h3>
                     </div>
-                    <div className="col-4 text-right">Price: {userInfomation.price}$</div>
+                    <div className="col-4 text-right">
+                      Price: {userInfomation.price}$
+                    </div>
                   </div>
                 </div>
                 <div className="card-body">
@@ -299,13 +317,15 @@ class UserInfoView extends React.Component {
 
 const mapStateToProps = state => ({
   UsersState: state.UsersReducer,
-  AdminState: state.AdminReducer
+  AdminState: state.AdminReducer,
+  UserInfoState: state.UserInfoReducer
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      fetchListUsersAction: fetchListUsers
+      fetchListUsersAction: fetchListUsers,
+      fetchUpdateUserState: updateUserState,
     },
     dispatch
   );

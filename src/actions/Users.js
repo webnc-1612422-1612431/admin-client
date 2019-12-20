@@ -5,9 +5,25 @@ import domain from '../constants/config';
 function getUsersSuccess(users) {
   return {
     type: types.LIST_USERS,
-    users
+    users,
+    page: 1
   };
 }
+
+function updateUserStateSuccess(users) {
+  return {
+    type: types.UPDATE_USER_STATE_SUCCESS,
+    users,
+    page: 1
+  };
+}
+
+export const changePage = (page) => {
+  return {
+    type: types.CHANGE_PAGE,
+    page
+  };
+};
 
 export const fetchListUsers = () => {
   return dispatch => {
@@ -49,3 +65,26 @@ export const fetchUserByID = (id) => {
   };
 };
 
+export const updateUserState = (id, state) => {
+  return dispatch => {
+    return axios
+      .post(`${domain['server-domain']}/updateuser`,
+      {
+          id,
+          state
+      }, {
+        headers: {
+          Authorization: `Bearer ${
+            JSON.parse(localStorage.getItem('user')).token
+          }`
+        }
+      })
+      .then(res => {
+        dispatch(updateUserStateSuccess(res.data));
+        return true;
+      })
+      .catch(() => {
+        return false;
+      });
+  };
+};

@@ -14,6 +14,8 @@ import CreateAdminView from './components/CreateAdminView';
 import UsersView from './components/UsersView';
 import UserInfoView from './components/UserInfoView';
 import SkillsView from './components/SkillsView';
+import ProfileView from './components/ProfileView';
+import Contracts from './components/ContractsView';
 
 const ls = require('localStorage');
 
@@ -55,14 +57,20 @@ class App extends React.Component {
                   </Link>
                 </li>
 
-                <li className="nav-item" key="users">
+                <li className="nav-item" key="skills">
                   <Link className="nav-link " to="/skills" key="link5">
                     <i className="ni ni-user-run text-blue"/> Skills
                   </Link>
                 </li>
 
+                <li className="nav-item" key="contract">
+                  <Link className="nav-link" to="/contracts" key="link6">
+                    <i className="ni ni-button-power text-blue"/> Contract
+                  </Link>
+                </li>
+
                 <li className="nav-item" onClick={this.handleLogout} key="logout">
-                  <Link className="nav-link" key="link6">
+                  <Link className="nav-link" key="link7">
                     <i className="ni ni-button-power text-blue"/> Logout
                   </Link>
                 </li>
@@ -95,6 +103,12 @@ class App extends React.Component {
           <Route exact path="/skills">
             <SkillsView />
           </Route>
+          <Route exact path="/profile">
+            <ProfileView />
+          </Route>
+          <Route exact path="/contracts">
+            <Contracts/>
+          </Route>
           <Route exact path="/">
             <Dashboard />
           </Route>
@@ -108,11 +122,7 @@ const mapStateToProps = state => ({
   AdminState: state.AdminReducer
 });
 
-const mapDispatchToProps = () => {
-  return {};
-};
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null,
 )(App);

@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/interactive-supports-focus */
 import React from 'react';
 
 import { connect } from 'react-redux';
@@ -39,6 +41,12 @@ class CreateAdminView extends React.Component {
         });
     };
 
+    handleProfile = e => {
+        e.preventDefault();
+        const {history} = this.props;
+        history.push("/profile");
+    }
+
     render() {
 
         const { AdminState } = this.props;
@@ -48,19 +56,19 @@ class CreateAdminView extends React.Component {
             <div className="main-content">
                 <nav className="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
                     <div className="container-fluid">
-                        <a className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="../index.html">Create a new Admin</a>
+                        <a className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="/">Create a new Admin</a>
                         <ul className="navbar-nav align-items-center d-none d-md-flex">
                             <li className="nav-item dropdown">
-                                <a className="nav-link pr-0" href="/" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <div onClick={this.handleProfile} style={{cursor: "pointer"}} className="nav-link pr-0"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <div className="media align-items-center">
                                         <span className="avatar avatar-sm rounded-circle">
-                                            {/* <img alt="Image placeholder" src="../assets/img/theme/team-4-800x800.jpg" /> */}
+                                            <img alt="" src={user.avatar} />
                                         </span>
                                         <div className="media-body ml-2 d-none d-lg-block">
                                             <span className="mb-0 text-sm  font-weight-bold">{user.fullname}</span>
                                         </div>
                                     </div>
-                                </a>
+                                </div>
                             </li>
                         </ul>
                     </div>

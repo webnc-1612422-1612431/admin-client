@@ -13,6 +13,8 @@ export const LOGOUT = 'LOGOUT';
 
 // List Users
 export const LIST_USERS = 'LIST_USERS';
+export const UPDATE_USER_STATE_SUCCESS = 'UPDATE_USER_STATE_SUCCESS';
+export const CHANGE_PAGE = 'CHANGE_PAGE';
 
 // List Skills
 export const LIST_SKILLS_SUCCESS = 'LIST_SKILLS_SUCCESS';
@@ -24,3 +26,6 @@ export const ADD_NEW_SKILL = 'ADD_NEW_SKILL';
 
 export const UPDATE_STATUS_SKILL = 'UPDATE_STATUS_SKILL';
 export const UPDATE_SKILL_NAME = 'UPDATE_SKILL_NAME';
+
+// Contract
+export const LIST_CONTRACTS = 'LIST_CONTRACTS';
