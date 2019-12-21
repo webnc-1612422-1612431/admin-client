@@ -109,7 +109,10 @@ class SkillsView extends React.Component {
                 skills[i].id,
                 skills[i].skill
               )}
-            >Edit</button>
+            >Rename</button>
+
+            {skills[i].state ? 
+
             <button
             type="button"
               className="btn btn-danger"
@@ -118,7 +121,20 @@ class SkillsView extends React.Component {
                 skills[i].id,
                 skills[i].state
               )}
-            >Remove</button>
+              style={{width: '100px'}}
+            >Inactive</button> :
+            <button
+            type="button"
+              className="btn btn-success"
+              onClick={this.hanleUpdateState.bind(
+                this,
+                skills[i].id,
+                skills[i].state
+              )}
+              style={{width: '100px'}}
+
+            >Active</button>
+          }
           </td>
         </tr>
       );

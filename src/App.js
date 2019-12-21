@@ -16,6 +16,7 @@ import UserInfoView from './components/UserInfoView';
 import SkillsView from './components/SkillsView';
 import ProfileView from './components/ProfileView';
 import Contracts from './components/ContractsView';
+import HandlerComplainView from './components/HandlerComplainView';
 
 const ls = require('localStorage');
 
@@ -109,9 +110,13 @@ class App extends React.Component {
           <Route exact path="/contracts">
             <Contracts/>
           </Route>
+          <Route exact path="/hanlercomplain/:email1/:email2/:contractid">
+            <HandlerComplainView/>
+          </Route>
           <Route exact path="/">
             <Dashboard />
           </Route>
+          
         </Switch>
       </Router>
     );

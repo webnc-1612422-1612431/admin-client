@@ -42,7 +42,7 @@ function fetchLogin(email, password) {
         localStorage.setItem(
           'user',
           JSON.stringify({
-            fullname: res.data.user.fullname,
+            user: res.data.user,
             token: res.data.token
           })
         );

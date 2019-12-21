@@ -2,7 +2,7 @@ import * as types from '../constants/ActionTypes';
 
 const initialState = {
   users: [],
-  page: 1
+  page: 0
 };
 
 function Users(state = initialState, action) {

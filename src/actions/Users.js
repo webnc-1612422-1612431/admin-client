@@ -6,7 +6,7 @@ function getUsersSuccess(users) {
   return {
     type: types.LIST_USERS,
     users,
-    page: 1
+    page: 0
   };
 }
 
@@ -14,7 +14,7 @@ function updateUserStateSuccess(users) {
   return {
     type: types.UPDATE_USER_STATE_SUCCESS,
     users,
-    page: 1
+    page: 0
   };
 }
 
@@ -65,13 +65,12 @@ export const fetchUserByID = (id) => {
   };
 };
 
-export const updateUserState = (id, state) => {
+export const updateUserState = (user) => {
   return dispatch => {
     return axios
       .post(`${domain['server-domain']}/updateuser`,
       {
-          id,
-          state
+          user
       }, {
         headers: {
           Authorization: `Bearer ${

@@ -86,7 +86,7 @@ class ProfileView extends React.Component {
               <div className="col-lg-3 order-lg-2">
                 <div className="card-profile-image">
                   <a href="/">
-                    <img alt="Place" src="../assets/img/theme/team-4-800x800.jpg" className="rounded-circle"/>
+                    <img alt="" style={{width: '150px', height: '150px  '}} src="profile-cover.jpg" className="rounded-circle"/>
                   </a>
                 </div>
               </div>
@@ -94,7 +94,6 @@ class ProfileView extends React.Component {
             <div className="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
               <div className="d-flex justify-content-between">
                 <a href="/" className="btn btn-sm btn-info mr-4">Connect</a>
-                <a href="/" className="btn btn-sm btn-default float-right">Message</a>
               </div>
             </div>
             <div className="card-body pt-0 pt-md-4">
@@ -144,39 +143,39 @@ class ProfileView extends React.Component {
                   <h3 className="mb-0">My account</h3>
                 </div>
                 <div className="col-4 text-right">
-                  <a href="#!" className="btn btn-sm btn-primary">Settings</a>
+                  <button type="submit" form="userinfomation" className="btn btn-sm btn-primary">Update</button>
                 </div>
               </div>
             </div>
             <div className="card-body">
-              <form>
+              <form id="userinfomation" onSubmit={this.hanldeSubmit}>
                 <h6 className="heading-small text-muted mb-4">User information</h6>
                 <div className="pl-lg-4">
                   <div className="row">
                     <div className="col-lg-6">
                       <div className="form-group">
-                        <label className="form-control-label" htmlFor="input-username">Username</label>
-                        <input type="text" id="input-username" className="form-control form-control-alternative" placeholder="Username" value="lucky.jesse"/>
+                        <label className="form-control-label" htmlFor="fullname">Name</label>
+        <input type="text" id="fullname" name="fullname" className="form-control form-control-alternative" placeholder={user.fullname}/>
                       </div>
                     </div>
                     <div className="col-lg-6">
                       <div className="form-group">
-                        <label className="form-control-label" htmlFor="input-email">Email address</label>
-                        <input type="email" id="input-email" className="form-control form-control-alternative" placeholder="jesse@example.com"/>
+                        <label className="form-control-label" htmlFor="email">Email address</label>
+                        <input type="email" id="email" name="email" className="form-control form-control-alternative" placeholder={user.email}/>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-lg-6">
                       <div className="form-group">
-                        <label className="form-control-label" htmlFor="input-first-name">First name</label>
-                        <input type="text" id="input-first-name" className="form-control form-control-alternative" placeholder="First name" value="Lucky"/>
+                        <label className="form-control-label" htmlFor="password">Password</label>
+                        <input type="password" id="password" name="password" className="form-control form-control-alternative" placeholder="Password"/>
                       </div>
                     </div>
                     <div className="col-lg-6">
                       <div className="form-group">
-                        <label className="form-control-label" htmlFor="input-last-name">Last name</label>
-                        <input type="text" id="input-last-name" className="form-control form-control-alternative" placeholder="Last name" value="Jesse"/>
+                        <label className="form-control-label" htmlFor="repass">Retype password</label>
+                        <input type="password" id="repass" name="repass" className="form-control form-control-alternative" placeholder="Retype password"/>
                       </div>
                     </div>
                   </div>
@@ -187,38 +186,18 @@ class ProfileView extends React.Component {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="form-group">
-                        <label className="form-control-label" htmlFor="input-address">Address</label>
-                        <input id="input-address" className="form-control form-control-alternative" placeholder="Home Address" value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09" type="text"/>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-lg-4">
-                      <div className="form-group">
-                        <label className="form-control-label" htmlFor="input-city">City</label>
-                        <input type="text" id="input-city" className="form-control form-control-alternative" placeholder="City" value="New York"/>
-                      </div>
-                    </div>
-                    <div className="col-lg-4">
-                      <div className="form-group">
-                        <label className="form-control-label" htmlFor="input-country">Country</label>
-                        <input type="text" id="input-country" className="form-control form-control-alternative" placeholder="Country" value="United States"/>
-                      </div>
-                    </div>
-                    <div className="col-lg-4">
-                      <div className="form-group">
-                        <label className="form-control-label" htmlFor="input-country">Postal code</label>
-                        <input type="number" id="input-postal-code" className="form-control form-control-alternative" placeholder="Postal code"/>
+                        <label className="form-control-label" htmlFor="address">Address</label>
+                        <input id="address" name="address" className="form-control form-control-alternative" placeholder={user.address} type="text"/>
                       </div>
                     </div>
                   </div>
                 </div>
                 <hr className="my-4" />
-                <h6 className="heading-small text-muted mb-4">About me</h6>
+                <h6 className="heading-small text-muted mb-4">Additional</h6>
                 <div className="pl-lg-4">
                   <div className="form-group">
                     <label htmlFor="/">About Me</label>
-                    <textarea rows="4" className="form-control form-control-alternative" placeholder="A few words about you ...">A beautiful Dashboard for Bootstrap 4. It is Free and Open Source.</textarea>
+                    <textarea name="introduction" rows="4" className="form-control form-control-alternative" placeholder={user.introduction}/>
                   </div>
                 </div>
               </form>
@@ -230,6 +209,7 @@ class ProfileView extends React.Component {
     </div>
     );
   }
+
 }
 
 const mapStateToProps = state => ({

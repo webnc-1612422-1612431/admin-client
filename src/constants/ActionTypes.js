@@ -29,6 +29,12 @@ export const UPDATE_SKILL_NAME = 'UPDATE_SKILL_NAME';
 
 // Contract
 export const LIST_CONTRACTS = 'LIST_CONTRACTS';
+export const UPDATE_CONTRACTS_SUCCESS = 'UPDATE_CONTRACTS_SUCCESS';
 
 // Admin
 export const UPDATE_ADMIN_SUCCESS = 'UPDATE_ADMIN_SUCCESS';
+
+// Messages
+export const LIST_MESSAGES = 'LIST_MESSAGES';
+export const ADD_MESSAGE = 'ADD_MESSAGE';
+export const CLEAR_MESSAGE = 'CLEAR_MESSAGE';

@@ -21,12 +21,16 @@ class UserInfoView extends React.Component {
     }
   }
 
-  hanleUpdateState = (id,state) => {
-    const {fetchUpdateUserState, fetchListUsersAction} = this.props;
-    Promise.resolve(fetchUpdateUserState(id, state ? 0 : 1)).then(() => {
-          fetchListUsersAction();
+  hanleUpdateState = (id, state) => {
+    const { fetchUpdateUserState, fetchListUsersAction } = this.props;
+    const user = {
+      id,
+      state: state === 1 ? 0 : 1
+    };
+    Promise.resolve(fetchUpdateUserState(user)).then(() => {
+      fetchListUsersAction();
     });
-  }
+  };
 
   render() {
     const { AdminState, UsersState, match } = this.props;
@@ -116,14 +120,24 @@ class UserInfoView extends React.Component {
                       <button
                         type="button"
                         className="btn btn-sm btn-danger float-right"
-                        onClick={this.hanleUpdateState.bind(this, userInfomation.id, userInfomation.state)}>
+                        onClick={this.hanleUpdateState.bind(
+                          this,
+                          userInfomation.id,
+                          userInfomation.state
+                        )}
+                      >
                         Inactive
                       </button>
                     ) : (
                       <button
                         type="button"
                         className="btn btn-sm btn-success float-right"
-                        onClick={this.hanleUpdateState.bind(this, userInfomation.id, userInfomation.state)}>
+                        onClick={this.hanleUpdateState.bind(
+                          this,
+                          userInfomation.id,
+                          userInfomation.state
+                        )}
+                      >
                         Active
                       </button>
                     )}
@@ -325,7 +339,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       fetchListUsersAction: fetchListUsers,
-      fetchUpdateUserState: updateUserState,
+      fetchUpdateUserState: updateUserState
     },
     dispatch
   );

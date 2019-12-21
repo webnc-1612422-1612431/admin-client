@@ -7,8 +7,10 @@ function GetInitialState() {
     pending: false
   };
 
-  const user = JSON.parse(localStorage.getItem('user'));
-  if (user !== null) {
+  const userInfo = JSON.parse(localStorage.getItem('user'));
+  
+  if (userInfo !== null) {
+    const {user} = userInfo;
     return {
       ...state,
       user

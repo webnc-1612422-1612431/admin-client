@@ -39,13 +39,13 @@ class UsersView extends React.Component {
     const tableContent = [];
     const pagination = [];
 
-    if (page === users.length/5 + 1){
+    if (page === Math.floor(users.length/5)){
       this.end = users.length;
     } else {
-      this.end = 5*page - 1;
+      this.end = 5*(page + 1);
     }
 
-    for (let i = 5*(page - 1); i < this.end; i += 1) {
+    for (let i = 5*page; i < this.end; i += 1) {
       tableContent.push(
         <tr onClick={this.rowHandleClick.bind(this, i)}>
           <th scope="row">
@@ -81,7 +81,7 @@ class UsersView extends React.Component {
       );
     }
 
-    for (let i = 0; i < users.length / 5 + 1; i += 1) {
+    for (let i = 0; i < users.length / 5; i += 1) {
       pagination.push(
         <li className="page-item active">
           <button className="page-link" type="button" onClick={this.handleClickPage.bind(this, i)}>
