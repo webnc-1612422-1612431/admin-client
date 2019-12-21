@@ -29,3 +29,6 @@ export const UPDATE_SKILL_NAME = 'UPDATE_SKILL_NAME';
 
 // Contract
 export const LIST_CONTRACTS = 'LIST_CONTRACTS';
+
+// Admin
+export const UPDATE_ADMIN_SUCCESS = 'UPDATE_ADMIN_SUCCESS';

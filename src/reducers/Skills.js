@@ -2,7 +2,7 @@ import * as types from '../constants/ActionTypes';
 
 const initialState = {
   skills: [],
-  page: 1,
+  page: 0,
   pending: false
 };
 
@@ -39,6 +39,12 @@ function Users(state = initialState, action) {
       return {
         ...state,
         pending: false
+      };
+    case types.CHANGE_PAGE:
+      return {
+        ...state,
+        pending: false,
+        page: action.page
       };
     default:
       return state;

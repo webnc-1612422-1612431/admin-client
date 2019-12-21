@@ -42,6 +42,13 @@ function updateNameSkillSuccess(skill) {
   };
 }
 
+export const changePage = (page) => {
+  return {
+    type: types.CHANGE_PAGE,
+    page
+  };
+};
+
 export const fetchListSkills = () => {
   return dispatch => {
     dispatch(getSkillsPending);

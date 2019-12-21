@@ -10,7 +10,8 @@ import {
   fetchListSkills,
   fetchAddSkill,
   fetchUpdateSkillStatus,
-  fetchUpdateSkillName
+  fetchUpdateSkillName,
+  changePage
 } from '../actions/Skills';
 
 
@@ -64,13 +65,29 @@ class SkillsView extends React.Component {
     });
   };
 
+  handleClickPage = page => {
+    const { fetchChangePage } = this.props;
+    fetchChangePage(page);
+  };
+
   render() {
     const { SkillsState, AdminState } = this.props;
     const { user } = AdminState;
-    const { skills } = SkillsState;
+    const { skills, page } = SkillsState;
     const tableContent = [];
+    const pagination = [];
 
-    for (let i = 0; i < skills.length; i += 1) {
+    console.log(user);
+
+    if (skills.length === 0) {
+      this.end = 0;
+    } else if (page === Math.floor(skills.length / 5)) {
+      this.end = skills.length;
+    } else {
+      this.end = 5 * (page + 1);
+    }
+
+    for (let i = 5*page; i < this.end; i += 1) {
       tableContent.push(
         <tr>
           <th scope="row">{i + 1}</th>
@@ -104,6 +121,20 @@ class SkillsView extends React.Component {
             >Remove</button>
           </td>
         </tr>
+      );
+    }
+
+    for (let i = 0; i < skills.length / 5; i += 1) {
+      pagination.push(
+        <li className="page-item active">
+          <button
+            className="page-link"
+            type="button"
+            onClick={this.handleClickPage.bind(this, i)}
+          >
+            {i + 1}
+          </button>
+        </li>
       );
     }
 
@@ -215,22 +246,7 @@ class SkillsView extends React.Component {
                           <span className="sr-only">Previous</span>
                         </a>
                       </li>
-                      <li className="page-item active">
-                        <a className="page-link" href="/">
-                          1
-                        </a>
-                      </li>
-                      <li className="page-item">
-                        <a className="page-link" href="/">
-                          2 <span className="sr-only">(current)</span>
-                        </a>
-                      </li>
-                      <li className="page-item">
-                        <a className="page-link" href="/">
-                          3
-                        </a>
-                      </li>
-                      <li className="page-item">
+                      {pagination}<li className="page-item">
                         <a className="page-link" href="/">
                           <i className="fas fa-angle-right" />
                           <span className="sr-only">Next</span>
@@ -364,7 +380,8 @@ const mapDispatchToProps = dispatch =>
       fetchListSkillsAction: fetchListSkills,
       fetchAddSkillAction: fetchAddSkill,
       updateSkillStatusAction: fetchUpdateSkillStatus,
-      updateSkillNameAction: fetchUpdateSkillName
+      updateSkillNameAction: fetchUpdateSkillName,
+      fetchChangePage: changePage,
     },
     dispatch
   );
