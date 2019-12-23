@@ -22,6 +22,7 @@ import { addChat, addBox, clearChat, clearBox } from '../actions/Chat';
 
 const ls = require('localStorage');
 
+// 2 cái này cần
 let check = false;
 let gMessageId;
 class ChatView extends React.Component {
@@ -29,8 +30,10 @@ class ChatView extends React.Component {
     super(props);
 
     const { addBoxAction, clearBoxAction } = this.props;
-    // Email cua tai khoan hien tai
+    
+    // myEmail: lấy email của mình
     const myEmail = JSON.parse(ls.getItem('user')).user.email;
+
     const database = app.database().ref();
     database.on('value', snap => {
       clearBoxAction();
@@ -41,14 +44,14 @@ class ChatView extends React.Component {
             messageId: childNode.key
           };
 
-          // Thêm message box (cột danh sách người nhắn tin bên trái)
+          // Thêm message box (cột danh sách người nhắn tin bên trái).
           addBoxAction(box);
         } else if (childNode.val().metadata.u2 === myEmail) {
           const box = {
             peerEmail: childNode.val().metadata.u1,
             messageId: childNode.key
           };
-          // Thêm message box (cột danh sách người nhắn tin bên trái)
+          // Thêm message box (cột danh sách người nhắn tin bên trái).
           addBoxAction(box);
         }
       });
@@ -71,6 +74,8 @@ class ChatView extends React.Component {
     });
   };
 
+  // Tạo phòng
+  // peerEmail: mail của thằng đối diện. Khi click tạo phòng
   createRoom = peerEmail => {
     const myEmail = JSON.parse(ls.getItem('user')).user.email;
     this.findRoom(myEmail, peerEmail);
@@ -94,9 +99,13 @@ class ChatView extends React.Component {
     }
   };
 
+  // Gửi tin nhắn
   handleSendMessage = e => {
     e.preventDefault();
+    // Lấy email của mình
     const myEmail = JSON.parse(ls.getItem('user')).user.email;
+
+    // Lấy message từ ô nhập tin nhắn
     const msg = document.getElementById('message').value;
     app
       .database()
@@ -106,6 +115,7 @@ class ChatView extends React.Component {
       .set({ sender: myEmail, text: msg, time: Date.now() });
   };
 
+  // Khi nhấn vào tin nhắn với ai đó (cột bên trái). thì lấy danh sách tin nhắn của nó bỏ vào cột bên phải
   handleGetMessage = messageId => {
     gMessageId = messageId;
 
