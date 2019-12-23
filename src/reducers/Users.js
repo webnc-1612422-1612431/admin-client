@@ -13,7 +13,7 @@ function Users(state = initialState, action) {
         users: action.users,
         page: action.page
       };
-    case types.CHANGE_PAGE:
+    case types.CHANGE_PAGE_USERS:
       return {
         ...state,
         page: action.page

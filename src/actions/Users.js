@@ -20,7 +20,7 @@ function updateUserStateSuccess(users) {
 
 export const changePage = (page) => {
   return {
-    type: types.CHANGE_PAGE,
+    type: types.CHANGE_PAGE_USERS,
     page
   };
 };

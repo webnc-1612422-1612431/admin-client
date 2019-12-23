@@ -17,6 +17,8 @@ import SkillsView from './components/SkillsView';
 import ProfileView from './components/ProfileView';
 import Contracts from './components/ContractsView';
 import HandlerComplainView from './components/HandlerComplainView';
+import ChatView from './components/ChatView';
+
 
 const ls = require('localStorage');
 
@@ -36,7 +38,7 @@ class App extends React.Component {
           id="sidenav-main"
         >
           <div className="container-fluid">
-            <Link className="navbar-brand pt-0" to="/dashboard" key="link1">
+            <Link className="navbar-brand pt-0" to="/" key="link1">
               <img src="logo.png" className="navbar-brand-img" alt="..." />
             </Link>
             <div className="collapse navbar-collapse" id="sidenav-collapse-main">
@@ -114,7 +116,7 @@ class App extends React.Component {
             <HandlerComplainView/>
           </Route>
           <Route exact path="/">
-            <Dashboard />
+            <ChatView />
           </Route>
           
         </Switch>

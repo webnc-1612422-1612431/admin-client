@@ -13,7 +13,7 @@ function Contracts(state = initialState, action) {
         contracts: action.contracts,
         page: action.page
       };
-    case types.CHANGE_PAGE:
+    case types.CHANGE_PAGE_CONTRACTS:
       return {
         ...state,
         page: action.page

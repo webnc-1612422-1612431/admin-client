@@ -5,7 +5,8 @@ import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 
 import {
-    fetchListContracts
+    fetchListContracts,
+    fetchChangePage
 } from '../actions/Contracts';
 
 
@@ -26,13 +27,13 @@ class ContractView extends React.Component {
   }
 
   handleClickPage = page => {
-    const { fetchChangePage } = this.props;
-    fetchChangePage(page);
+    const { fetchChangePageAction } = this.props;
+    fetchChangePageAction(page);
   };
 
-  rowHandleClick = () => {
+  rowHandleClick = (teacher, student, contractid) => {
     const {history} = this.props;
-    history.push('/hanlercomplain/tbngoc.khtn@gmail.com/alotinhban@gmail.com/1');
+    history.push(`/hanlercomplain/${teacher}/${student}/${contractid}`);
   }
 
   render() {
@@ -52,7 +53,7 @@ class ContractView extends React.Component {
 
     for (let i = 5 * page; i < this.end; i += 1) {
       tableContent.push(
-        <tr onClick={this.rowHandleClick.bind(this, contracts[i].email1, )}>
+        <tr onClick={this.rowHandleClick.bind(this, contracts[i].teacheremail, contracts[i].studentemail, contracts[i].contractid)}>
           <th scope="row">
             <div className="media align-items-center">
               
@@ -244,7 +245,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-        fetchListContractsAction: fetchListContracts
+        fetchListContractsAction: fetchListContracts,
+        fetchChangePageAction: fetchChangePage
     },
     dispatch
   );

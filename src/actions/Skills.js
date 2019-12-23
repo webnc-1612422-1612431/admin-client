@@ -44,7 +44,7 @@ function updateNameSkillSuccess(skill) {
 
 export const changePage = (page) => {
   return {
-    type: types.CHANGE_PAGE,
+    type: types.CHANGE_PAGE_SKILLS,
     page
   };
 };

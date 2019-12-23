@@ -16,9 +16,9 @@ function updateContractsSuccess() {
   };
 }
 
-export const changePage = (page) => {
+export const fetchChangePage = (page) => {
   return {
-    type: types.CHANGE_PAGE,
+    type: types.CHANGE_PAGE_CONTRACTS,
     page
   };
 };

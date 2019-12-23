@@ -40,7 +40,7 @@ function Users(state = initialState, action) {
         ...state,
         pending: false
       };
-    case types.CHANGE_PAGE:
+    case types.CHANGE_PAGE_SKILLS:
       return {
         ...state,
         pending: false,
