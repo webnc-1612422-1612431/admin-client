@@ -9,6 +9,7 @@ import '../App.css';
 import '../assets/js/plugins/nucleo/css/nucleo.css';
 import '../assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css';
 import '../assets/css/argon-dashboard.css';
+import Header from './layout/Header';
 
 class ProfileView extends React.Component {
   constructor(props) {
@@ -30,54 +31,8 @@ class ProfileView extends React.Component {
     const { user } = AdminState;
     return (
       <div className="main-content">
-        <nav
-          className="navbar navbar-top navbar-expand-md navbar-dark"
-          id="navbar-main"
-        >
-          <div className="container-fluid">
-            <a
-              className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
-              href="/"
-            >
-              User information
-            </a>
-            <ul className="navbar-nav align-items-center d-none d-md-flex">
-              <li className="nav-item dropdown">
-                <a
-                  className="nav-link pr-0"
-                  href="/"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <div className="media align-items-center">
-                    <span className="avatar avatar-sm rounded-circle">
-                      <img alt="Placeholder" src={user.avatar} />
-                    </span>
-                    <div className="media-body ml-2 d-none d-lg-block">
-                      <span className="mb-0 text-sm  font-weight-bold">
-                        {user.fullname}
-                      </span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-
-        <div
-          className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
-          style={{
-            height: '100px',
-            backgroundImage: 'url(/profile-cover.jpg)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center top'
-          }}
-        >
-          <span className="mask bg-gradient-default opacity-8" />
-        </div>
+        <Header isDisplay={1}/>
+        
         <div className="container-fluid mt--7">
         <div className="row">
         <div className="col-xl-4 order-xl-2 mb-5 mb-xl-0">

@@ -11,6 +11,8 @@ import '../App.css';
 import "../assets/js/plugins/nucleo/css/nucleo.css";
 import "../assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css";
 import "../assets/css/argon-dashboard.css";
+import Footer from './layout/Footer';
+import Header from './layout/Header';
 
 const localStorage = require('localStorage');
 
@@ -48,35 +50,9 @@ class CreateAdminView extends React.Component {
     }
 
     render() {
-
-        const { AdminState } = this.props;
-        const { user } = AdminState;
-
         return (
             <div className="main-content">
-                <nav className="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
-                    <div className="container-fluid">
-                        <a className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="/">Create a new Admin</a>
-                        <ul className="navbar-nav align-items-center d-none d-md-flex">
-                            <li className="nav-item dropdown">
-                                <div onClick={this.handleProfile} style={{cursor: "pointer"}} className="nav-link pr-0"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <div className="media align-items-center">
-                                        <span className="avatar avatar-sm rounded-circle">
-                                            <img alt="" src={user.avatar} />
-                                        </span>
-                                        <div className="media-body ml-2 d-none d-lg-block">
-                                            <span className="mb-0 text-sm  font-weight-bold">{user.fullname}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-                <div className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style={{ height: '100px', backgroundImage: 'url(profile-cover.jpg)', backgroundSize: 'cover', backgroundPosition: 'center top' }}>
-                    <span className="mask bg-gradient-default opacity-8"/>
-
-                </div>
+                <Header isDisplay={1}/>
                 <div className="container-fluid mt--7">
                     <div className="row">
                         <div style={{ marginRight: '16%', marginLeft: '16%' }} className="col-xl-8 order-xl-1">
@@ -132,32 +108,8 @@ class CreateAdminView extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <footer className="footer">
-                        <div className="row align-items-center justify-content-xl-between">
-                            <div className="col-xl-6">
-                                <div className="copyright text-center text-xl-left text-muted">
-                                    &copy; 2019 <a href="https://www.creative-tim.com" className="font-weight-bold ml-1" >Web advanced</a>
-                                </div>
-                            </div>
-                            <div className="col-xl-6">
-                                <ul className="nav nav-footer justify-content-center justify-content-xl-end">
-                                    <li className="nav-item">
-                                        <a href="https://www.creative-tim.com" className="nav-link" >HCMUS</a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a href="https://www.creative-tim.com/presentation" className="nav-link" >About Us</a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a href="http://blog.creative-tim.com" className="nav-link" >Blog</a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" className="nav-link" >License</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </footer>
-                </div>
+                    <Footer/>
+                    </div>
             </div>);
     }
 }
