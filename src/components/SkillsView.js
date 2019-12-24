@@ -141,7 +141,8 @@ class SkillsView extends React.Component {
     }
 
     for (let i = 0; i < skills.length / 5; i += 1) {
-      pagination.push(
+      if (i === page){
+        pagination.push(
         <li className="page-item active">
           <button
             className="page-link"
@@ -152,6 +153,20 @@ class SkillsView extends React.Component {
           </button>
         </li>
       );
+      } else {
+        pagination.push(
+          <li className="page-item">
+            <button
+              className="page-link"
+              type="button"
+              onClick={this.handleClickPage.bind(this, i)}
+            >
+              {i + 1}
+            </button>
+          </li>
+        );
+      }
+      
     }
 
     return (

@@ -47,3 +47,8 @@ export const ADD_CHAT = 'ADD_CHAT';
 export const ADD_BOX = 'ADD_BOX';
 export const CLEAR_CHAT = 'CLEAR_CHAT';
 export const CLEAR_BOX = 'CLEAR_BOX';
+
+// Dashboard
+export const GET_CHART_DATA = 'GET_CHART_DATA';
+export const GET_TOP_SALES_BY_TEACHER = 'GET_TOP_SALES_BY_TEACHER';
+export const GET_TOP_SALES_BY_SKILL = 'GET_TOP_SALES_BY_SKILL';

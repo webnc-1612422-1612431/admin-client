@@ -5,6 +5,7 @@ import SkillsReducer from './Skills';
 import ContractsReducer from './Contracts';
 import HandlerComplainReducer from './HandlerComplain';
 import ChatReducer from './Chat';
+import DashboardReducer from './Dashboard';
 
 export default combineReducers({
   AdminReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
   SkillsReducer,
   ContractsReducer,
   HandlerComplainReducer,
-  ChatReducer
+  ChatReducer,
+  DashboardReducer
 });

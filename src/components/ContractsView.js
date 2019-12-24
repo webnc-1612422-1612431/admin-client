@@ -81,6 +81,7 @@ class ContractView extends React.Component {
     }
 
     for (let i = 0; i < contracts.length / 5; i += 1) {
+      if (i === page){
       pagination.push(
         <li className="page-item active">
           <button
@@ -91,7 +92,19 @@ class ContractView extends React.Component {
             {i + 1}
           </button>
         </li>
-      );
+      );} else {
+        pagination.push(
+          <li className="page-item">
+            <button
+              className="page-link"
+              type="button"
+              onClick={this.handleClickPage.bind(this, i)}
+            >
+              {i + 1}
+            </button>
+          </li>
+        );
+      }
     }
 
     return (

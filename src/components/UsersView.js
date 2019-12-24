@@ -28,9 +28,9 @@ class UsersView extends React.Component {
   };
 
   handleClickPage = page => {
-    const {fetchChangePage} = this.props;
+    const { fetchChangePage } = this.props;
     fetchChangePage(page);
-  }
+  };
 
   render() {
     const { UsersState, AdminState } = this.props;
@@ -39,13 +39,13 @@ class UsersView extends React.Component {
     const tableContent = [];
     const pagination = [];
 
-    if (page === Math.floor(users.length/5)){
+    if (page === Math.floor(users.length / 5)) {
       this.end = users.length;
     } else {
-      this.end = 5*(page + 1);
+      this.end = 5 * (page + 1);
     }
 
-    for (let i = 5*page; i < this.end; i += 1) {
+    for (let i = 5 * page; i < this.end; i += 1) {
       tableContent.push(
         <tr onClick={this.rowHandleClick.bind(this, i)}>
           <th scope="row">
@@ -82,13 +82,31 @@ class UsersView extends React.Component {
     }
 
     for (let i = 0; i < users.length / 5; i += 1) {
-      pagination.push(
-        <li className="page-item active">
-          <button className="page-link" type="button" onClick={this.handleClickPage.bind(this, i)}>
-            {i + 1}
-          </button>
-        </li>
-      );
+      if (i === page) {
+        pagination.push(
+          <li className="page-item active">
+            <button
+              className="page-link"
+              type="button"
+              onClick={this.handleClickPage.bind(this, i)}
+            >
+              {i + 1}
+            </button>
+          </li>
+        );
+      } else {
+        pagination.push(
+          <li className="page-item">
+            <button
+              className="page-link"
+              type="button"
+              onClick={this.handleClickPage.bind(this, i)}
+            >
+              {i + 1}
+            </button>
+          </li>
+        );
+      }
     }
 
     return (
