@@ -27,7 +27,6 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     const user = localStorage.getItem('user');
-    alert(user);
     if (user === null) {
       window.location.href = '/login';
     }
@@ -174,7 +173,7 @@ class Dashboard extends React.Component {
       </ResponsiveContainer>
     );
 
-    const typeChartArray = ['date', 'week', 'month', 'year'];
+    const typeChartArray = ['date', 'month', 'year'];
     const listItemChart = [];
     for (let i = 0; i < typeChartArray.length; i += 1) {
       if (typeChart === typeChartArray[i]) {
