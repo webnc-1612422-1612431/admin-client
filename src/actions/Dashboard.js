@@ -46,7 +46,38 @@ export const fetchChartData = (type) => {
         }
       })
       .then(res => {
+
+        if (type === 'month'){
+        const preChartData = res.data;
+        for (let i = 0; i < preChartData.chartData.length - 1; i+=1){
+          for (let j = i + 1; j < preChartData.chartData.length; j+=1){
+            if (
+              (preChartData.chartData[i].year === preChartData.chartData[j].year && preChartData.chartData[i].month > preChartData.chartData[j].month)
+              || (preChartData.chartData[i].year > preChartData.chartData[j].year)
+            ) {
+              const temp = preChartData.chartData[i];
+              preChartData.chartData[i] = preChartData.chartData[j];
+              preChartData.chartData[j] = temp;
+            }
+          }
+        }
+
+        const thisChartData = {
+          chartData: []
+        };
+
+        for (let i = 0; i < preChartData.chartData.length; i += 1){
+          thisChartData.chartData.push({
+            month: `${preChartData.chartData[i].month}/${preChartData.chartData[i].year}`,
+            sales: preChartData.chartData[i].sales
+          });
+        }
+
+        dispatch(getChartDataSuccess(thisChartData, type));
+      } else {
         dispatch(getChartDataSuccess(res.data, type));
+
+      }
         return true;
       })
       .catch(() => {

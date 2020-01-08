@@ -70,6 +70,7 @@ class Dashboard extends React.Component {
       summaryReport
     } = DashboardState;
 
+    console.log(chartData);
     // start of teacher
     const listTypeTeacher = [];
     const typeTeacherArray = [1, 7, 30, 90];
