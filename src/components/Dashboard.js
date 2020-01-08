@@ -27,6 +27,7 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     const user = localStorage.getItem('user');
+    console.log(user);
     if (user === null) {
       window.location.href = '/login';
     }

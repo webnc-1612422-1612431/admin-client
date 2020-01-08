@@ -14,6 +14,7 @@ class Header extends React.Component {
   render() {
     const { AdminState, pageName, isDisplay } = this.props;
     const { user } = AdminState;
+    console.log(user);
     const added =[];
 
     if (isDisplay === 1) {
