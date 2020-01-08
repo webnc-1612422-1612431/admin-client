@@ -17,7 +17,7 @@ import SkillsView from './components/SkillsView';
 import ProfileView from './components/ProfileView';
 import Contracts from './components/ContractsView';
 import HandlerComplainView from './components/HandlerComplainView';
-import ChatView from './components/ChatView';
+// import ChatView from './components/ChatView';
 
 
 const ls = require('localStorage');
@@ -51,30 +51,30 @@ class App extends React.Component {
                 </li>
                 <li className="nav-item true" key="createadmin">
                   <Link className="nav-link " to="/createadmin" key="link3">
-                    <i className="ni ni-user-run text-blue"/> Create new admin
+                    <i className="ni ni-user-run text-green"/> Create new admin
                   </Link>
                 </li>
                 <li className="nav-item" key="users">
                   <Link className="nav-link " to="/users" key="link4">
-                    <i className="ni ni-user-run text-blue"/> Users
+                    <i className="ni ni-single-02 text-orange"/> Users
                   </Link>
                 </li>
 
                 <li className="nav-item" key="skills">
                   <Link className="nav-link " to="/skills" key="link5">
-                    <i className="ni ni-user-run text-blue"/> Skills
+                    <i className="ni ni-html5 text-pink"/> Skills
                   </Link>
                 </li>
 
                 <li className="nav-item" key="contract">
                   <Link className="nav-link" to="/contracts" key="link6">
-                    <i className="ni ni-button-power text-blue"/> Contract
+                    <i className="ni ni-single-copy-04 text-yellow"/> Contract
                   </Link>
                 </li>
 
                 <li className="nav-item" onClick={this.handleLogout} key="logout">
                   <Link className="nav-link" key="link7">
-                    <i className="ni ni-button-power text-blue"/> Logout
+                    <i className="ni ni-button-power text-red"/> Logout
                   </Link>
                 </li>
               </ul>
@@ -116,7 +116,7 @@ class App extends React.Component {
             <HandlerComplainView/>
           </Route>
           <Route exact path="/">
-            <ChatView />
+            <Dashboard />
           </Route>
           
         </Switch>

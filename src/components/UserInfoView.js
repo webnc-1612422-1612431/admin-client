@@ -15,10 +15,13 @@ import Header from './layout/Header';
 class UserInfoView extends React.Component {
   constructor(props) {
     super(props);
+    const user = localStorage.getItem('user');
+    if (user === null) {
+      window.location.href = '/login';
+    }
     const { UsersState, history } = this.props;
     const { users } = UsersState;
     if (users.length === 0) {
-      console.log(users.length);
       history.push('/');
     }
   }

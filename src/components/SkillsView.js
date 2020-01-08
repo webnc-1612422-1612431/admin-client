@@ -26,11 +26,11 @@ import Footer from './layout/Footer';
 class SkillsView extends React.Component {
   constructor(props) {
     super(props);
-    const { fetchListSkillsAction, AdminState, history } = this.props;
-    const { user } = AdminState;
+    const user = localStorage.getItem('user');
     if (user === null) {
-      history.push('/');
+      window.location.href = '/login';
     }
+    const { fetchListSkillsAction} = this.props;
     fetchListSkillsAction();
   }
 
@@ -61,7 +61,6 @@ class SkillsView extends React.Component {
 
   hanleUpdateState = (id, state) => {
     const { updateSkillStatusAction } = this.props;
-    console.log(state);
     Promise.resolve(updateSkillStatusAction(id, state)).then(() => {
       const { fetchListSkillsAction } = this.props;
       fetchListSkillsAction();

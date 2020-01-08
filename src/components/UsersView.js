@@ -16,11 +16,11 @@ import Header from './layout/Header';
 class UsersView extends React.Component {
   constructor(props) {
     super(props);
-    const { fetchListUsersAction, AdminState, history } = this.props;
-    const { user } = AdminState;
+    const user = localStorage.getItem('user');
     if (user === null) {
-      history.push('/');
+      window.location.href = '/login';
     }
+    const { fetchListUsersAction } = this.props;
     fetchListUsersAction();
   }
 
@@ -61,20 +61,12 @@ class UsersView extends React.Component {
           </th>
           <td>{users[i].fullname}</td>
           <td>{users[i].role}</td>
-          <td>{1400}</td>
+          <td>{users[i].contracts}</td>
           <td>
             <div className="d-flex align-items-center">
               <div>
-                <div className="progress">
-                  <div
-                    className="progress-bar bg-warning"
-                    role="progressbar"
-                    aria-valuenow="60"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                    style={{ width: '60%' }}
-                  />
-                </div>
+                {Math.round(users[i].rate)} 
+                <img src="star.png" alt="" style={{width: '30px', height: '30px', marginTop: '-5px'}}/>
               </div>
             </div>
           </td>

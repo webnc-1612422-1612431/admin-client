@@ -17,13 +17,15 @@ import '../assets/css/argon-dashboard.css';
 import Footer from './layout/Footer';
 import Header from './layout/Header';
 
+const ls = require('localStorage');
+
 class ContractView extends React.Component {
   constructor(props) {
     super(props);
-    const { fetchListContractsAction, AdminState, history } = this.props;
-    const { user } = AdminState;
+    const { fetchListContractsAction } = this.props;
+    const user = JSON.parse(ls.getItem('user'));
     if (user === null) {
-      history.push('/');
+      window.location.href = '/login';
     }
     fetchListContractsAction();
   }

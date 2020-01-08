@@ -10,8 +10,7 @@ import '../assets/js/plugins/nucleo/css/nucleo.css';
 import '../assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css';
 import '../assets/css/argon-dashboard.css';
 
-import app from '../constants/firebaseCfg';
-import { fetchAddMessage, fetchClearMessage } from '../actions/HandlerComplain';
+import { fetchAddMessage, fetchClearMessage, fetchListMessages } from '../actions/HandlerComplain';
 import {fetchUpdateContract} from '../actions/Contracts';
 import Footer from './layout/Footer';
 import Header from './layout/Header';
@@ -20,40 +19,18 @@ import Header from './layout/Header';
 class HandlerComplainView extends React.Component {
   constructor(props) {
     super(props);
+    const user = localStorage.getItem('user');
+    if (user === null) {
+      window.location.href = '/login';
+    }
     const {
       match,
-      fetchAddMessageAction,
-      fetchClearMessageAction
+      fetchClearMessageAction,
+      fetchListMessagesAction
     } = this.props;
     fetchClearMessageAction();
     const { email1, email2 } = match.params;
-    this.database = app.database().ref();
-    this.database.on('value', (snap) => {
-      snap.forEach((childNode) => {
-        if (
-          (childNode.val().metadata.u1 === email1 &&
-            childNode.val().metadata.u2 === email2) ||
-          (childNode.val().metadata.u2 === email1 &&
-            childNode.val().metadata.u1 === email2)
-        ) {
-          app
-            .database()
-            .ref()
-            .child(childNode.key)
-            .child('message')
-            .on('value', (snap1) => {
-              snap1.forEach((childNode1) => {
-                const message = {
-                  text: childNode1.val().text,
-                  time: childNode1.val().time,
-                  sender: childNode1.val().sender
-                };
-                fetchAddMessageAction(message);
-              });
-            });
-        }
-      });
-    });
+    fetchListMessagesAction(email1, email2);
   }
 
   hanleUpdateState = (id, state) => {
@@ -201,7 +178,8 @@ const mapDispatchToProps = dispatch =>
       //   fetchUpdateUserState: updateUserState
       fetchAddMessageAction: fetchAddMessage,
       fetchClearMessageAction: fetchClearMessage,
-      fetchUpdateContractAction:fetchUpdateContract 
+      fetchUpdateContractAction:fetchUpdateContract,
+      fetchListMessagesAction: fetchListMessages
     },
     dispatch
   );

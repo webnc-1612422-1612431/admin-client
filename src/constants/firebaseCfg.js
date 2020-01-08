@@ -1,16 +1,16 @@
 import firebase from 'firebase/app';
-import 'firebase/database';
+import 'firebase/storage';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDTd_ciKAft_pcd55t-DqURyVekGatRE0Y",
-    authDomain: "tutor-e223b.firebaseapp.com",
-    databaseURL: "https://tutor-e223b.firebaseio.com",
-    projectId: "tutor-e223b",
-    storageBucket: "tutor-e223b.appspot.com",
-    messagingSenderId: "821658884925",
-    appId: "1:821658884925:web:e6e9cbf61cb310b2d98354",
-    measurementId: "G-41HQ2JYNZ6"
-  };
+  apiKey: 'AIzaSyAm3kqrRovatIBaA4C7OR6jwcYivHV-RBE',
+  authDomain: 'caroimagecdn.firebaseapp.com',
+  databaseURL: 'https://caroimagecdn.firebaseio.com',
+  projectId: 'caroimagecdn',
+  storageBucket: 'caroimagecdn.appspot.com',
+  messagingSenderId: '582545233785',
+  appId: '1:582545233785:web:76df7c8b96a710408801a8',
+  measurementId: 'G-31GE9FMP6J'
+};
+firebase.initializeApp(firebaseConfig);
 
-  const app = firebase.initializeApp(firebaseConfig);
-  export default app;
+export default firebase;

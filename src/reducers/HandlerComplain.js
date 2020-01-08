@@ -20,9 +20,14 @@ function HandlerComplain(state = initialState, action) {
     case types.CLEAR_MESSAGE:
       return {
           ...state,
-          message: [],
+          messages: [],
           pending: false
       };
+      case types.GET_MESSAGES_SUCCESS:
+        return {
+          ...state,
+          messages: action.messages
+        };
     default:
       return state;
   }

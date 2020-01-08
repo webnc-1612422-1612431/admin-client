@@ -66,7 +66,11 @@ function Admin(state = initialState, action) {
         initialState,
         error: null
       };
-
+    case types.UPDATE_PHOTO_SUCCESS:
+      return {
+        ...state,
+        user: action.user
+      };
     default:
       return state;
   }

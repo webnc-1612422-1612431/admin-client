@@ -17,7 +17,7 @@ import '../assets/css/util.css';
 import '../assets/css/main.css';
 import '../assets/css/chatStyle.css';
 
-import app from '../constants/firebaseCfg';
+import { databaseCfg } from '../constants/firebaseCfg';
 import { addChat, addBox, clearChat, clearBox } from '../actions/Chat';
 
 const ls = require('localStorage');
@@ -34,11 +34,11 @@ class ChatView extends React.Component {
     // myEmail: lấy email của mình
     const myEmail = JSON.parse(ls.getItem('user')).user.email;
 
-    const database = app.database().ref();
+    const database = databaseCfg.database().ref();
     database.on('value', snap => {
       clearBoxAction();
       snap.forEach(childNode => {
-        if (childNode.val().metadata.u1 === myEmail) {
+        if (childNode.val().metadata && childNode.val().metadata.u1 === myEmail) {
           const box = {
             peerEmail: childNode.val().metadata.u2,
             messageId: childNode.key
@@ -46,7 +46,7 @@ class ChatView extends React.Component {
 
           // Thêm message box (cột danh sách người nhắn tin bên trái).
           addBoxAction(box);
-        } else if (childNode.val().metadata.u2 === myEmail) {
+        } else if (childNode.val().metadata && childNode.val().metadata.u2 === myEmail) {
           const box = {
             peerEmail: childNode.val().metadata.u1,
             messageId: childNode.key
@@ -59,7 +59,7 @@ class ChatView extends React.Component {
   }
 
   findRoom = (email1, email2) => {
-    const database = app.database().ref();
+    const database = databaseCfg.database().ref();
     database.on('value', snap => {
       snap.forEach(childNode => {
         if (
@@ -84,7 +84,7 @@ class ChatView extends React.Component {
       const { clearBoxAction, clearChatAction } = this.props;
       clearChatAction();
       clearBoxAction();
-      const database = app.database().ref();
+      const database = databaseCfg.database().ref();
       database
         .push()
         .set({
@@ -107,7 +107,7 @@ class ChatView extends React.Component {
 
     // Lấy message từ ô nhập tin nhắn
     const msg = document.getElementById('message').value;
-    app
+    databaseCfg
       .database()
       .ref(gMessageId)
       .child('message')
@@ -120,13 +120,13 @@ class ChatView extends React.Component {
     gMessageId = messageId;
 
     const { addChatAction } = this.props;
-    const database = app.database().ref();
+    const database = databaseCfg.database().ref();
     database.on('value', snap => {
       const { clearChatAction } = this.props;
       clearChatAction();
       snap.forEach(childNode => {
         if (childNode.key === messageId) {
-          app
+          databaseCfg
             .database()
             .ref()
             .child(childNode.key)

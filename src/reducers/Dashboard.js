@@ -4,9 +4,10 @@ const initialState = {
   chartData: [],
   typeChart: 'date',
   topSalesByTeacher: [],
-  typeTeacher: null,
+  typeTeacher: 1,
   topSalesBySkill: [],
-  typeSkill: null,
+  typeSkill: 1,
+  summaryReport: {}
 };
 
 function Dashboard(state = initialState, action) {
@@ -20,14 +21,20 @@ function Dashboard(state = initialState, action) {
     case types.GET_TOP_SALES_BY_SKILL:
       return {
         ...state,
-        topSalesBySkill: action.topSalesBySkill
+        topSalesBySkill: action.topSalesBySkill.salesBySkill,
+        typeSkill: action.typeSkill
       };
     case types.GET_TOP_SALES_BY_TEACHER:
       return {
         ...state,
-        topSalesBySkill: action.topSalesByTeacher
+        topSalesByTeacher: action.topSalesByTeacher.salesByTeacher,
+        typeTeacher: action.typeTeacher
       };
-
+    case types.GET_SUMMARY_REPORT:
+      return {
+        ...state,
+        summaryReport: action.summaryReport
+      };
     default:
       return state;
   }

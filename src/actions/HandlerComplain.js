@@ -1,4 +1,6 @@
+import axios from 'axios';
 import * as types from '../constants/ActionTypes';
+import domain from '../constants/config';
 
 export const getListSuccess = messages => {
   return {
@@ -20,4 +22,32 @@ export const fetchClearMessage = () => {
   };
 };
 
+export const fetchListMessageSuccess = (messages) => {
+  return {
+    type: types.GET_MESSAGES_SUCCESS,
+    messages
+  };
+};
 
+export function fetchListMessages(email1, email2) {
+  return dispatch => {
+    // dispatch(LoginPending());
+    return axios
+      .get(`${domain['server-domain']}/chatcontent/${email1}/${email2}`, {
+        headers: {
+          Authorization: `Bearer ${
+            JSON.parse(localStorage.getItem('user')).token
+          }`
+        }
+      })
+      .then(res => {
+        console.log(res.data.messages);
+        dispatch(fetchListMessageSuccess(res.data.messages));
+        return true;
+      })
+      .catch(() => {
+        // dispatch(LoginFail("Đăng nhập thất bại"));
+        return false;
+      });
+  };
+}

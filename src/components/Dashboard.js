@@ -15,7 +15,8 @@ import {
 import {
   fetchChartData,
   fetchTopSalesBySkill,
-  fetchTopSalesByTeacher
+  fetchTopSalesByTeacher,
+  fetchSummaryReport
 } from '../actions/Dashboard';
 import Footer from './layout/Footer';
 import Header from './layout/Header';
@@ -26,13 +27,20 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     const user = localStorage.getItem('user');
-    // console.log(user);
     if (user === null) {
-      const { history } = this.props;
-      history.push('/login');
+      window.location.href = '/login';
     }
-    const { fetchChartDataAction } = this.props;
+
+    const {
+      fetchChartDataAction,
+      fetchTopSalesByTeacherAction,
+      fetchTopSalesBySkillAction,
+      fetchSummaryReportAction
+    } = this.props;
     fetchChartDataAction('date');
+    fetchTopSalesByTeacherAction(1);
+    fetchTopSalesBySkillAction(1);
+    fetchSummaryReportAction();
   }
 
   handleChangeTypeChart = type => {
@@ -40,9 +48,94 @@ class Dashboard extends React.Component {
     fetchChartDataAction(type);
   };
 
+  handleChangeTypeTeacher = type => {
+    const { fetchTopSalesByTeacherAction } = this.props;
+    fetchTopSalesByTeacherAction(type);
+  };
+
+  handleChangeTypeSkill = type => {
+    const { fetchTopSalesBySkillAction } = this.props;
+    fetchTopSalesBySkillAction(type);
+  };
+
   render() {
     const { DashboardState } = this.props;
-    const { chartData, typeChart } = DashboardState;
+    const {
+      chartData,
+      typeChart,
+      topSalesByTeacher,
+      typeTeacher,
+      topSalesBySkill,
+      typeSkill,
+      summaryReport
+    } = DashboardState;
+
+    // start of teacher
+    const listTypeTeacher = [];
+    const typeTeacherArray = [1, 7, 30, 90];
+    for (let i = 0; i < typeTeacherArray.length; i += 1) {
+      if (typeTeacher === typeTeacherArray[i]) {
+        listTypeTeacher.push(
+          <li className="nav-item mr-2 mr-md-0">
+            <button
+              type="button"
+              className="nav-link py-2 px-3 active"
+              data-toggle="tab"
+            >
+              <span className="d-none d-md-block">
+                {typeTeacherArray[i]} day
+              </span>
+              <span className="d-md-none">{typeTeacherArray[i]}</span>
+            </button>
+          </li>
+        );
+      } else {
+        listTypeTeacher.push(
+          <li className="nav-item mr-2 mr-md-0">
+            <button
+              type="button"
+              onClick={this.handleChangeTypeTeacher.bind(
+                this,
+                typeTeacherArray[i]
+              )}
+              className="nav-link py-2 px-3"
+              data-toggle="tab"
+            >
+              <span className="d-none d-md-block">
+                {typeTeacherArray[i]} day
+              </span>
+              <span className="d-md-none">{typeTeacherArray[i]}</span>
+            </button>
+          </li>
+        );
+      }
+    }
+
+    const listItemTeacher = [];
+    for (let i = 0; i < topSalesByTeacher.length; i += 1) {
+      listItemTeacher.push(
+        <tr>
+          <td className="text-center">{i + 1}</td>
+          <th scope="row">
+            <div className="media align-items-center">
+              <a href="/" className="avatar rounded-circle mr-3">
+                <img alt="" src="../assets/img/theme/bootstrap.jpg" />
+              </a>
+              <div className="media-body">
+                <span className="mb-0 text-sm">
+                  {topSalesByTeacher[i].email}
+                </span>
+              </div>
+            </div>
+          </th>
+          <td>{topSalesByTeacher[i].fullname}</td>
+          <td>{topSalesByTeacher[i].sales}</td>
+        </tr>
+      );
+    }
+    // end of teacher
+
+    // start of chart
     let datakey;
     switch (typeChart) {
       case 'date':
@@ -80,130 +173,107 @@ class Dashboard extends React.Component {
       </ResponsiveContainer>
     );
 
+    const typeChartArray = ['date', 'week', 'month', 'year'];
     const listItemChart = [];
-    if (typeChart === 'date') {
-      listItemChart.push(
-        <li className="nav-item mr-2 mr-md-0">
-          <button
-            type="button"
-            onClick={this.handleChangeTypeChart.bind(this, 'date')}
-            className="nav-link py-2 px-3 active"
-            data-toggle="tab"
-          >
-            <span className="d-none d-md-block">Day</span>
-            <span className="d-md-none">D</span>
-          </button>
-        </li>
-      );
-    } else {
-      listItemChart.push(
-        <li className="nav-item mr-2 mr-md-0">
-          <button
-            type="button"
-            onClick={this.handleChangeTypeChart.bind(this, 'date')}
-            className="nav-link py-2 px-3"
-            data-toggle="tab"
-          >
-            <span className="d-none d-md-block">Day</span>
-            <span className="d-md-none">D</span>
-          </button>
-        </li>
-      );
+    for (let i = 0; i < typeChartArray.length; i += 1) {
+      if (typeChart === typeChartArray[i]) {
+        listItemChart.push(
+          <li className="nav-item mr-2 mr-md-0">
+            <button
+              type="button"
+              className="nav-link py-2 px-3 active"
+              data-toggle="tab"
+            >
+              <span className="d-none d-md-block">
+                {typeChartArray[i][0].toLocaleUpperCase() +
+                  typeChartArray[i].slice(1)}
+              </span>
+              <span className="d-md-none">
+                {typeChartArray[i].substring(0, 1).toLocaleUpperCase()}
+              </span>
+            </button>
+          </li>
+        );
+      } else {
+        listItemChart.push(
+          <li className="nav-item mr-2 mr-md-0">
+            <button
+              type="button"
+              onClick={this.handleChangeTypeChart.bind(this, typeChartArray[i])}
+              className="nav-link py-2 px-3"
+              data-toggle="tab"
+            >
+              <span className="d-none d-md-block">
+                {typeChartArray[i][0].toLocaleUpperCase() +
+                  typeChartArray[i].slice(1)}
+              </span>
+              <span className="d-md-none">
+                {typeChartArray[i].substring(0, 1).toLocaleUpperCase()}
+              </span>
+            </button>
+          </li>
+        );
+      }
+    }
+    // end of chart
+
+    // start of skill
+    const listTypeSkill = [];
+    const typeSkillArray = [1, 7, 30, 90];
+    for (let i = 0; i < typeSkillArray.length; i += 1) {
+      if (typeSkill === typeSkillArray[i]) {
+        listTypeSkill.push(
+          <li className="nav-item mr-2 mr-md-0">
+            <button
+              type="button"
+              className="nav-link py-2 px-3 active"
+              data-toggle="tab"
+            >
+              <span className="d-none d-md-block">{typeSkillArray[i]} day</span>
+              <span className="d-md-none">{typeSkillArray[i]}</span>
+            </button>
+          </li>
+        );
+      } else {
+        listTypeSkill.push(
+          <li className="nav-item mr-2 mr-md-0">
+            <button
+              type="button"
+              onClick={this.handleChangeTypeSkill.bind(this, typeSkillArray[i])}
+              className="nav-link py-2 px-3"
+              data-toggle="tab"
+            >
+              <span className="d-none d-md-block">{typeSkillArray[i]} day</span>
+              <span className="d-md-none">{typeSkillArray[i]}</span>
+            </button>
+          </li>
+        );
+      }
     }
 
-    if (typeChart === 'week') {
-      listItemChart.push(
-        <li className="nav-item mr-2 mr-md-0">
-          <button
-            type="button"
-            onClick={this.handleChangeTypeChart.bind(this, 'week')}
-            className="nav-link py-2 px-3 active"
-            data-toggle="tab"
-          >
-            <span className="d-none d-md-block">Week</span>
-            <span className="d-md-none">W</span>
-          </button>
-        </li>
-      );
-    } else {
-      listItemChart.push(
-        <li className="nav-item mr-2 mr-md-0">
-          <button
-            type="button"
-            onClick={this.handleChangeTypeChart.bind(this, 'week')}
-            className="nav-link py-2 px-3"
-            data-toggle="tab"
-          >
-            <span className="d-none d-md-block">Week</span>
-            <span className="d-md-none">W</span>
-          </button>
-        </li>
+    const listItemSkill = [];
+    for (let i = 0; i < topSalesBySkill.length; i += 1) {
+      listItemSkill.push(
+        <tr>
+          <td className="text-center">{i + 1}</td>
+          <th scope="row">
+            <div className="media align-items-center">
+              <div className="media-body">
+                <span className="mb-0 text-sm">{topSalesBySkill[i].skill}</span>
+              </div>
+            </div>
+          </th>
+          <td>{topSalesBySkill[i].contract}</td>
+          <td>{topSalesBySkill[i].users}</td>
+          <td>{topSalesBySkill[i].sales}</td>
+        </tr>
       );
     }
-
-    if (typeChart === 'month') {
-      listItemChart.push(
-        <li className="nav-item mr-2 mr-md-0">
-          <button
-            type="button"
-            onClick={this.handleChangeTypeChart.bind(this, 'month')}
-            className="nav-link py-2 px-3 active"
-            data-toggle="tab"
-          >
-            <span className="d-none d-md-block">Month</span>
-            <span className="d-md-none">M</span>
-          </button>
-        </li>
-      );
-    } else {
-      listItemChart.push(
-        <li className="nav-item mr-2 mr-md-0">
-          <button
-            type="button"
-            onClick={this.handleChangeTypeChart.bind(this, 'month')}
-            className="nav-link py-2 px-3"
-            data-toggle="tab"
-          >
-            <span className="d-none d-md-block">Month</span>
-            <span className="d-md-none">M</span>
-          </button>
-        </li>
-      );
-    }
-
-    if (typeChart === 'year') {
-      listItemChart.push(
-        <li className="nav-item mr-2 mr-md-0">
-          <button
-            type="button"
-            onClick={this.handleChangeTypeChart.bind(this, 'year')}
-            className="nav-link py-2 px-3 active"
-            data-toggle="tab"
-          >
-            <span className="d-none d-md-block">Year</span>
-            <span className="d-md-none">Y</span>
-          </button>
-        </li>
-      );
-    } else {
-      listItemChart.push(
-        <li className="nav-item mr-2 mr-md-0">
-          <button
-            type="button"
-            onClick={this.handleChangeTypeChart.bind(this, 'year')}
-            className="nav-link py-2 px-3"
-            data-toggle="tab"
-          >
-            <span className="d-none d-md-block">Year</span>
-            <span className="d-md-none">Y</span>
-          </button>
-        </li>
-      );
-    }
+    // end of skill
 
     return (
       <div className="main-content">
-        <Header isDisplay={0}/>
+        <Header isDisplay={0} />
         <div className="header bg-gradient-primary pb-8 pt-5 pt-md-8">
           <div className="container-fluid">
             <div className="header-body">
@@ -214,10 +284,10 @@ class Dashboard extends React.Component {
                       <div className="row">
                         <div className="col">
                           <h5 className="card-title text-uppercase text-muted mb-0">
-                            Traffic
+                            SALES
                           </h5>
                           <span className="h2 font-weight-bold mb-0">
-                            350,897
+                            {summaryReport.sales}$
                           </span>
                         </div>
                         <div className="col-auto">
@@ -241,15 +311,15 @@ class Dashboard extends React.Component {
                       <div className="row">
                         <div className="col">
                           <h5 className="card-title text-uppercase text-muted mb-0">
-                            New users
+                            Users
                           </h5>
                           <span className="h2 font-weight-bold mb-0">
-                            2,356
+                            {summaryReport.users}
                           </span>
                         </div>
                         <div className="col-auto">
                           <div className="icon icon-shape bg-warning text-white rounded-circle shadow">
-                            <i className="fas fa-chart-pie" />
+                            <i className="fas fa-users" />
                           </div>
                         </div>
                       </div>
@@ -268,13 +338,15 @@ class Dashboard extends React.Component {
                       <div className="row">
                         <div className="col">
                           <h5 className="card-title text-uppercase text-muted mb-0">
-                            Sales
+                            Contract
                           </h5>
-                          <span className="h2 font-weight-bold mb-0">924</span>
+                          <span className="h2 font-weight-bold mb-0">
+                            {summaryReport.contracts}
+                          </span>
                         </div>
                         <div className="col-auto">
                           <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
-                            <i className="fas fa-users" />
+                            <i className="fas fa-file" />
                           </div>
                         </div>
                       </div>
@@ -293,15 +365,15 @@ class Dashboard extends React.Component {
                       <div className="row">
                         <div className="col">
                           <h5 className="card-title text-uppercase text-muted mb-0">
-                            Performance
+                            Skill
                           </h5>
                           <span className="h2 font-weight-bold mb-0">
-                            49,65%
+                            {summaryReport.skills}
                           </span>
                         </div>
                         <div className="col-auto">
                           <div className="icon icon-shape bg-info text-white rounded-circle shadow">
-                            <i className="fas fa-percent" />
+                            <i className="fa fa-android" />
                           </div>
                         </div>
                       </div>
@@ -342,17 +414,17 @@ class Dashboard extends React.Component {
             </div>
           </div>
           <div className="row mt-5">
-            <div className="col-xl-8 mb-5 mb-xl-0">
+            <div className="col-xl-12 mb-5 mb-xl-0">
               <div className="card shadow">
                 <div className="card-header border-0">
                   <div className="row align-items-center">
                     <div className="col">
-                      <h3 className="mb-0">Page visits</h3>
+                      <h3 className="mb-0">Top 5 sales by teacher</h3>
                     </div>
                     <div className="col text-right">
-                      <a href="#!" className="btn btn-sm btn-primary">
-                        See all
-                      </a>
+                      <ul className="nav nav-pills justify-content-end">
+                        {listTypeTeacher}
+                      </ul>
                     </div>
                   </div>
                 </div>
@@ -360,210 +432,57 @@ class Dashboard extends React.Component {
                   <table className="table align-items-center table-flush">
                     <thead className="thead-light">
                       <tr>
-                        <th scope="col">Page name</th>
-                        <th scope="col">Visitors</th>
-                        <th scope="col">Unique users</th>
-                        <th scope="col">Bounce rate</th>
+                        <th scope="col" className="text-center">
+                          Rank
+                        </th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Fullname</th>
+                        <th scope="col">Sales</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">/argon/</th>
-                        <td>4,569</td>
-                        <td>340</td>
-                        <td>
-                          <i className="fas fa-arrow-up text-success mr-3" />{' '}
-                          46,53%
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">/argon/index.html</th>
-                        <td>3,985</td>
-                        <td>319</td>
-                        <td>
-                          <i className="fas fa-arrow-down text-warning mr-3" />{' '}
-                          46,53%
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">/argon/charts.html</th>
-                        <td>3,513</td>
-                        <td>294</td>
-                        <td>
-                          <i className="fas fa-arrow-down text-warning mr-3" />{' '}
-                          36,49%
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">/argon/tables.html</th>
-                        <td>2,050</td>
-                        <td>147</td>
-                        <td>
-                          <i className="fas fa-arrow-up text-success mr-3" />{' '}
-                          50,87%
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">/argon/profile.html</th>
-                        <td>1,795</td>
-                        <td>190</td>
-                        <td>
-                          <i className="fas fa-arrow-down text-danger mr-3" />{' '}
-                          46,53%
-                        </td>
-                      </tr>
-                    </tbody>
+                    <tbody>{listItemTeacher}</tbody>
                   </table>
                 </div>
               </div>
             </div>
-            <div className="col-xl-4">
+          </div>
+          <div className="row mt-5">
+            <div className="col-xl-12 mb-5 mb-xl-0">
               <div className="card shadow">
-                <div className="card-header border-0">
+                <div className="  card-header border-0">
                   <div className="row align-items-center">
                     <div className="col">
-                      <h3 className="mb-0">Social traffic</h3>
+                      <h3 className="mb-0">Top 5 sales by skill</h3>
                     </div>
                     <div className="col text-right">
-                      <a href="#!" className="btn btn-sm btn-primary">
-                        See all
-                      </a>
+                      <ul className="nav nav-pills justify-content-end">
+                        {listTypeSkill}
+                      </ul>
                     </div>
                   </div>
                 </div>
+
                 <div className="table-responsive">
                   <table className="table align-items-center table-flush">
                     <thead className="thead-light">
                       <tr>
-                        <th scope="col">Referral</th>
-                        <th scope="col">Visitors</th>
-                        <th scope="col"> </th>
+                        <th scope="col" className="text-center">
+                          Rank
+                        </th>
+                        <th scope="col">Skill name</th>
+                        <th scope="col">Total contract</th>
+                        <th scope="col">Total user</th>
+                        <th scope="col">Sales</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">Facebook</th>
-                        <td>1,480</td>
-                        <td>
-                          <div className="d-flex align-items-center">
-                            <span className="mr-2">60%</span>
-                            <div>
-                              <div className="progress">
-                                <div
-                                  className="progress-bar bg-gradient-danger"
-                                  role="progressbar"
-                                  aria-valuenow="60"
-                                  aria-valuemin="0"
-                                  aria-valuemax="100"
-                                  style={{ width: '60%' }}
-                                >
-                                  {' '}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Facebook</th>
-                        <td>5,480</td>
-                        <td>
-                          <div className="d-flex align-items-center">
-                            <span className="mr-2">70%</span>
-                            <div>
-                              <div className="progress">
-                                <div
-                                  className="progress-bar bg-gradient-success"
-                                  role="progressbar"
-                                  aria-valuenow="70"
-                                  aria-valuemin="0"
-                                  aria-valuemax="100"
-                                  style={{ width: '70%' }}
-                                >
-                                  {' '}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Google</th>
-                        <td>4,807</td>
-                        <td>
-                          <div className="d-flex align-items-center">
-                            <span className="mr-2">80%</span>
-                            <div>
-                              <div className="progress">
-                                <div
-                                  className="progress-bar bg-gradient-primary"
-                                  role="progressbar"
-                                  aria-valuenow="80"
-                                  aria-valuemin="0"
-                                  aria-valuemax="100"
-                                  style={{ width: '80%' }}
-                                >
-                                  {' '}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Instagram</th>
-                        <td>3,678</td>
-                        <td>
-                          <div className="d-flex align-items-center">
-                            <span className="mr-2">75%</span>
-                            <div>
-                              <div className="progress">
-                                <div
-                                  className="progress-bar bg-gradient-info"
-                                  role="progressbar"
-                                  aria-valuenow="75"
-                                  aria-valuemin="0"
-                                  aria-valuemax="100"
-                                  style={{ width: '75%' }}
-                                >
-                                  {' '}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">twitter</th>
-                        <td>2,645</td>
-                        <td>
-                          <div className="d-flex align-items-center">
-                            <span className="mr-2">30%</span>
-                            <div>
-                              <div className="progress">
-                                <div
-                                  className="progress-bar bg-gradient-warning"
-                                  role="progressbar"
-                                  aria-valuenow="30"
-                                  aria-valuemin="0"
-                                  aria-valuemax="100"
-                                  style={{ width: '30%' }}
-                                >
-                                  {' '}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
+                    <tbody>{listItemSkill}</tbody>
                   </table>
                 </div>
               </div>
             </div>
           </div>
-          <Footer/>
-          </div>
+          <Footer />
+        </div>
       </div>
     );
   }
@@ -579,7 +498,8 @@ const mapDispatchToProps = dispatch =>
     {
       fetchChartDataAction: fetchChartData,
       fetchTopSalesBySkillAction: fetchTopSalesBySkill,
-      fetchTopSalesByTeacherAction: fetchTopSalesByTeacher
+      fetchTopSalesByTeacherAction: fetchTopSalesByTeacher,
+      fetchSummaryReportAction: fetchSummaryReport
     },
     dispatch
   );

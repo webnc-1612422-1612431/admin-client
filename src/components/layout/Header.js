@@ -4,17 +4,16 @@ import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 
 class Header extends React.Component {
-  constructor(props) {
-    super(props);
-    console.log('');
+  handleClickProfile = (e) => {
+    e.preventDefault();
+    const {history}=this.props;
+    history.push('/profile');
   }
 
   render() {
     const { AdminState, pageName, isDisplay } = this.props;
     const { user } = AdminState;
     const added =[];
-    console.log(this.props);
-
 
     if (isDisplay === 1) {
         added.push(<div
@@ -52,16 +51,16 @@ class Header extends React.Component {
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  <div className="media align-items-center">
+                  <button type="button" style={{color: 'white'}} className="media align-items-center" onClick={this.handleClickProfile.bind(this)}>
                     <span className="avatar avatar-sm rounded-circle">
-                      <img alt="Placeholder" src={user.avatar} />
+                      <img alt="Placeholder" style={{width: '36px', height: '36px'}} src={user.avatar} />
                     </span>
                     <div className="media-body ml-2 d-none d-lg-block">
                       <span className="mb-0 text-sm  font-weight-bold">
                         {user.fullname}
                       </span>
                     </div>
-                  </div>
+                  </button>
                 </a>
               </li>
             </ul>
