@@ -3,18 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 
-const localStorage = require('localStorage');
-
 class Header extends React.Component {
-
-  constructor(props){
-    super(props);
-    const user = localStorage.getItem('user');
-    if (user === null) {
-      window.location.href = '/login';
-    }
-  }
-
   handleClickProfile = (e) => {
     e.preventDefault();
     
