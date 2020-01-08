@@ -10,7 +10,7 @@ import '../assets/js/plugins/nucleo/css/nucleo.css';
 import '../assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css';
 import '../assets/css/argon-dashboard.css';
 
-import { fetchAddMessage, fetchClearMessage, fetchListMessages } from '../actions/HandlerComplain';
+import { fetchAddMessage, fetchClearMessage, fetchListMessages, fetchContractDetail } from '../actions/HandlerComplain';
 import {fetchUpdateContract} from '../actions/Contracts';
 import Footer from './layout/Footer';
 import Header from './layout/Header';
@@ -26,23 +26,14 @@ class HandlerComplainView extends React.Component {
     const {
       match,
       fetchClearMessageAction,
-      fetchListMessagesAction
+      fetchListMessagesAction,
+      fetchContractDetailAction
     } = this.props;
     fetchClearMessageAction();
-    const { email1, email2 } = match.params;
+    const { email1, email2, id } = match.params;
     fetchListMessagesAction(email1, email2);
+    fetchContractDetailAction(id);
   }
-
-  hanleUpdateState = (id, state) => {
-    const { fetchUpdateUserState, fetchListUsersAction } = this.props;
-    const user = {
-      id,
-      state: state === 1 ? 0 : 1
-    };
-    Promise.resolve(fetchUpdateUserState(user)).then(() => {
-      fetchListUsersAction();
-    });
-  };
 
   moneyForStudent = (e) => {
     e.preventDefault();
@@ -59,8 +50,8 @@ class HandlerComplainView extends React.Component {
             icon: "success",
           });
           const {fetchUpdateContractAction, match,history} = this.props;
-          const {contractid} = match.params;
-          Promise.resolve(fetchUpdateContractAction({id:contractid, ishandled: 1})).then(() => {
+          const {id} = match.params;
+          Promise.resolve(fetchUpdateContractAction({contractid: id, ishandled: 1, isSuccess: 0})).then(() => {
             history.push("/contracts");
           });
         }
@@ -82,8 +73,8 @@ class HandlerComplainView extends React.Component {
             icon: "success",
           });
           const {fetchUpdateContractAction, match, history} = this.props;
-          const {contractid} = match.params;
-          Promise.resolve(fetchUpdateContractAction({id:contractid, ishandled: 1})).then(() => {
+          const {id} = match.params;
+          Promise.resolve(fetchUpdateContractAction({contractid: id, ishandled: 1, isSuccess: 1})).then(() => {
             history.push("/contracts");
           });
         }
@@ -92,15 +83,33 @@ class HandlerComplainView extends React.Component {
 
   render() {
     const { HandlerComplainState } = this.props;
-    const { messages } = HandlerComplainState;
+    const { messages, information, complains } = HandlerComplainState;
 
     const messagesContent = [];
     for (let i = 0; i < messages.length; i += 1) {
-      messagesContent.push(
-        <div>
-          {messages[i].sender}:{messages[i].text}
-        </div>
-      );
+      
+      if (messages[i].sender === messages[0].sender) {
+        messagesContent.push(
+          <div style={{marginBottom: '5px', textAlign: '-webkit-right'}}> 
+            <div style={{fontSize:'13px'}}>{messages[i].sender}</div> 
+            <div style={{border: 'solid #6f97d9 1px', borderRadius: '30px', padding: '4px 10px 4px 10px', color: 'white', background: '#6f97d9', width: 'fit-content'}}> {messages[i].text}</div>
+          </div>
+        );
+      } else {
+        messagesContent.push(
+          <div style={{marginBottom: '5px', textAlign: '-webkit-left'}}> 
+            <div style={{fontSize:'13px'}}>{messages[i].sender}</div> 
+            <div style={{border: 'solid #6f97d9 1px', borderRadius: '30px', padding: '2px 10px 2px 10px', color: 'white', background: '#6f97d9', width: 'fit-content'}}> {messages[i].text}</div>
+          </div>
+        );
+      }
+    }
+
+    const complainContent = [];
+    for (let i = 0; i < complains.length; i+=1){
+    complainContent.push(<div style={{display: 'flex'}}>{complains[i].content} 	
+      {complains[i].ishandled? <div style={{color: 'green'}}>&#9679;</div>:<div style={{color: 'red'}}>&#9679;</div>}
+    </div>);
     }
 
     return (
@@ -120,11 +129,15 @@ class HandlerComplainView extends React.Component {
                   </div>
                 </div>
                 <div style={{ height: '80vh' }} className="card-body">
-                  <div>Teacher: {}</div>
-                  <div>User: {}</div>
-                  <div>Revenue: {}</div>
-                  <div>Start time: {}</div>
-                  <div>Finish time: {}</div>
+                  <div><b>Teacher: </b>{information.teachername}</div>
+                  <div><b>Student:</b> {information.studentname}</div>
+                  <div><b>Revenue:</b> {information.revenue}</div>
+                  <div><b>Start time:</b> {information.startdate.toString().substring(0,10)}</div>
+                  <div><b>Finish time:</b> {information.enddate.toString().substring(0,10)}</div>
+                  <hr/>
+                  <div><b>Complain content</b></div>
+                  {complainContent}
+                  <hr/>
                   <button
                     style={{ width: '100%', marginBottom: '10px' }}
                     className="btn btn-success"
@@ -175,11 +188,11 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      //   fetchUpdateUserState: updateUserState
       fetchAddMessageAction: fetchAddMessage,
       fetchClearMessageAction: fetchClearMessage,
       fetchUpdateContractAction:fetchUpdateContract,
-      fetchListMessagesAction: fetchListMessages
+      fetchListMessagesAction: fetchListMessages,
+      fetchContractDetailAction: fetchContractDetail
     },
     dispatch
   );

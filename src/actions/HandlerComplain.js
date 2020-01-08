@@ -9,6 +9,8 @@ export const getListSuccess = messages => {
   };
 };
 
+
+
 export const fetchAddMessage = message => {
     return {
         type: types.ADD_MESSAGE,
@@ -29,6 +31,14 @@ export const fetchListMessageSuccess = (messages) => {
   };
 };
 
+export const fetchInformationSuccess = (information, complains) => {
+  return {
+    type: types.CONTRACT_DETAIL,
+    information,
+    complains
+  };
+};
+
 export function fetchListMessages(email1, email2) {
   return dispatch => {
     // dispatch(LoginPending());
@@ -41,8 +51,16 @@ export function fetchListMessages(email1, email2) {
         }
       })
       .then(res => {
-        console.log(res.data.messages);
-        dispatch(fetchListMessageSuccess(res.data.messages));
+
+        // console.log(res.data.messages.get('-Lxj0Xw0rUgwCoWkrlUq'));
+        // console.log(res.data.messages.message['-Lxj0Xw0rUgwCoWkrlUq']);
+        const resKey = Object.keys(res.data.messages.message);
+        const messages = [];
+        for (let i = 0; i < resKey.length; i+=1) {
+          messages.push(res.data.messages.message[resKey[i]]);
+        }
+
+        dispatch(fetchListMessageSuccess(messages));
         return true;
       })
       .catch(() => {
@@ -51,3 +69,32 @@ export function fetchListMessages(email1, email2) {
       });
   };
 }
+
+
+export function fetchContractDetail(id) {
+  return dispatch => {
+    // dispatch(LoginPending());
+    return axios
+      .post(`${domain['server-domain']}/contractdetail`,{
+        id
+      }, {
+        headers: {
+          Authorization: `Bearer ${
+            JSON.parse(localStorage.getItem('user')).token
+          }`
+        }
+      })
+      .then(res => {
+        console.log(res.data.information);
+
+        dispatch(fetchInformationSuccess(res.data.information, res.data.complains));
+        return true;
+      })
+      .catch(() => {
+        // dispatch(LoginFail("Đăng nhập thất bại"));
+        console.log('bug');
+        return false;
+      });
+  };
+}
+

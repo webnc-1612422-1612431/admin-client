@@ -52,7 +52,7 @@ class UsersView extends React.Component {
           <th scope="row">
             <div className="media align-items-center">
               <a href="/" className="avatar rounded-circle mr-3">
-                <img alt="" src="../assets/img/theme/bootstrap.jpg" />
+                <img alt="" style={{width: '47px', height: '47px'}} src={users[i].avatar} />
               </a>
               <div className="media-body">
                 <span className="mb-0 text-sm">{users[i].email}</span>
@@ -61,11 +61,14 @@ class UsersView extends React.Component {
           </th>
           <td>{users[i].fullname}</td>
           <td>{users[i].role}</td>
-          <td>{users[i].contracts}</td>
+          <td className="align-items-center">{users[i].contracts}</td>
+          {users[i].contracts === '' ? <td className="align-items-center">{users[i].successrate}%</td>: <td className="align-items-center">{users[i].successrate}</td>}
+
+          
           <td>
             <div className="d-flex align-items-center">
               <div>
-                {Math.round(users[i].rate)} 
+                {Number(users[i].rate).toFixed(1)} 
                 <img src="star.png" alt="" style={{width: '30px', height: '30px', marginTop: '-5px'}}/>
               </div>
             </div>
@@ -121,6 +124,7 @@ class UsersView extends React.Component {
                         <th scope="col">Fullname</th>
                         <th scope="col">Role</th>
                         <th scope="col">Contract</th>
+                        <th scope="col">Successrate</th>
                         <th scope="col">Rate</th>
                       </tr>
                     </thead>

@@ -35,9 +35,9 @@ class ContractView extends React.Component {
     fetchChangePageAction(page);
   };
 
-  rowHandleClick = (teacher, student, contractid) => {
+  rowHandleClick = (teacher, student, id) => {
     const {history} = this.props;
-    history.push(`/hanlercomplain/${teacher}/${student}/${contractid}`);
+    history.push(`/hanlercomplain/${teacher}/${student}/${id}`);
   }
 
   render() {
@@ -56,7 +56,7 @@ class ContractView extends React.Component {
 
     for (let i = 5 * page; i < this.end; i += 1) {
       tableContent.push(
-        <tr onClick={this.rowHandleClick.bind(this, contracts[i].teacheremail, contracts[i].studentemail, contracts[i].contractid)}>
+        <tr onClick={this.rowHandleClick.bind(this, contracts[i].teacheremail, contracts[i].studentemail, contracts[i].id)}>
           <th scope="row">
             <div className="media align-items-center">
               

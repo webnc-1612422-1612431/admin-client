@@ -112,7 +112,7 @@ class App extends React.Component {
           <Route exact path="/contracts">
             <Contracts/>
           </Route>
-          <Route exact path="/hanlercomplain/:email1/:email2/:contractid">
+          <Route exact path="/hanlercomplain/:email1/:email2/:id">
             <HandlerComplainView/>
           </Route>
           <Route exact path="/">

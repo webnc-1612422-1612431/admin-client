@@ -3,6 +3,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
+import swal from 'sweetalert';
+
 import { fetchListUsers } from '../actions/Users';
 import {fetchPostUpdateProfile} from '../actions/Admin';
 
@@ -30,7 +32,13 @@ class ProfileView extends React.Component {
     e.preventDefault();
     if (e.target.files[0]) {
       const {fetchPostUpdateProfileAction} = this.props;
-      fetchPostUpdateProfileAction(1, e.target.files[0]);
+      Promise.resolve(fetchPostUpdateProfileAction(1, e.target.files[0])).then(res => {
+        if (res) {
+          swal('Update photo success');
+        } else {
+          swal('Update photo fail');
+        }
+      });
     }
   };
 

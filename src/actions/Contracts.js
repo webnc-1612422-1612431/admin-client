@@ -59,7 +59,6 @@ export const fetchUpdateContract = (complain) => {
       })
       .then(() => {
         dispatch(updateContractsSuccess());
-        console.log('thanhf coong');
         return true;
       })
       .catch(() => {

@@ -49,6 +49,7 @@ export const ADD_CHAT = 'ADD_CHAT';
 export const ADD_BOX = 'ADD_BOX';
 export const CLEAR_CHAT = 'CLEAR_CHAT';
 export const CLEAR_BOX = 'CLEAR_BOX';
+export const CONTRACT_DETAIL = 'CONTRACT_DETAIL';
 
 // Dashboard
 export const GET_CHART_DATA = 'GET_CHART_DATA';

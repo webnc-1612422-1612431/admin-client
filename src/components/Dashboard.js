@@ -119,7 +119,7 @@ class Dashboard extends React.Component {
           <th scope="row">
             <div className="media align-items-center">
               <a href="/" className="avatar rounded-circle mr-3">
-                <img alt="" src="../assets/img/theme/bootstrap.jpg" />
+                <img alt="" style={{width: '47px', height: '47px'}} src={topSalesByTeacher[i].avatar} />
               </a>
               <div className="media-body">
                 <span className="mb-0 text-sm">
@@ -157,7 +157,7 @@ class Dashboard extends React.Component {
       <ResponsiveContainer width="100%" height={400}>
         <LineChart
           data={chartData.chartData}
-          margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
+          margin={{ top: 5, right: 20, bottom: 5, left: 20 }}
         >
           <Line
             type="monotone"

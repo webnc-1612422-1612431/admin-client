@@ -19,11 +19,6 @@ class UserInfoView extends React.Component {
     if (user === null) {
       window.location.href = '/login';
     }
-    const { UsersState, history } = this.props;
-    const { users } = UsersState;
-    if (users.length === 0) {
-      history.push('/');
-    }
   }
 
   hanleUpdateState = (id, state) => {
@@ -42,10 +37,11 @@ class UserInfoView extends React.Component {
     const { users } = UsersState;
     const { row } = match.params;
     const userInfomation = users[row];
+    console.log(users, row);
 
     return (
       <div className="main-content">
-        <Header isDisplay={1}/>
+        <Header isDisplay={1} />
         <div className="container-fluid mt--7">
           <div className="row">
             <div className="col-xl-4 order-xl-2 mb-5 mb-xl-0">
@@ -220,7 +216,7 @@ class UserInfoView extends React.Component {
                               Introduction
                             </label>
                             <textarea
-                              style={{ height: 'auto' }}
+                              style={{ height: '200px' }}
                               className="form-control form-control-alternative"
                               disabled
                             >
@@ -235,8 +231,8 @@ class UserInfoView extends React.Component {
               </div>
             </div>
           </div>
-         <Footer/>
-         </div>
+          <Footer />
+        </div>
       </div>
     );
   }

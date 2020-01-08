@@ -16,7 +16,6 @@ import {
   changePage
 } from '../actions/Skills';
 
-
 import '../App.css';
 import '../assets/js/plugins/nucleo/css/nucleo.css';
 import '../assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css';
@@ -30,7 +29,7 @@ class SkillsView extends React.Component {
     if (user === null) {
       window.location.href = '/login';
     }
-    const { fetchListSkillsAction} = this.props;
+    const { fetchListSkillsAction } = this.props;
     fetchListSkillsAction();
   }
 
@@ -38,24 +37,33 @@ class SkillsView extends React.Component {
     e.preventDefault();
     const { fetchAddSkillAction } = this.props;
     const newSkill = e.target.newSkill.value;
-    fetchAddSkillAction(newSkill);
+    Promise.resolve(fetchAddSkillAction(newSkill)).then(res => {
+      if (res) {
+        swal('Add skill success');
+      } else {
+        swal('Add skill fail');
+      }
+    });
     document.getElementById('newSkill').value = '';
   };
 
   handleEdit = (id, skill) => {
-    swal(`Nhập tên mới cho kỹ năng: ${  skill}`, {
-      content: "input",
-    })
-    .then((value) => {
-      const {updateSkillNameAction, fetchListSkillsAction} = this.props;
-      Promise.resolve(updateSkillNameAction(id, value)).then(res => {
-        if (res) {
-          fetchListSkillsAction();
-          swal("Change skill name success");
-        } else {
-          swal("Change skill name fail");
-        }
-      });
+    swal(`Nhập tên mới cho kỹ năng: ${skill}`, {
+      content: 'input'
+    }).then(value => {
+      if (value === '') {
+        swal('Change skill name fail');
+      } else {
+        const { updateSkillNameAction, fetchListSkillsAction } = this.props;
+        Promise.resolve(updateSkillNameAction(id, value)).then(res => {
+          if (res) {
+            fetchListSkillsAction();
+            swal('Change skill name success');
+          } else {
+            swal('Change skill name fail');
+          }
+        });
+      }
     });
   };
 
@@ -78,7 +86,6 @@ class SkillsView extends React.Component {
     const tableContent = [];
     const pagination = [];
 
-
     if (skills.length === 0) {
       this.end = 0;
     } else if (page === Math.floor(skills.length / 5)) {
@@ -87,20 +94,20 @@ class SkillsView extends React.Component {
       this.end = 5 * (page + 1);
     }
 
-    for (let i = 5*page; i < this.end; i += 1) {
+    for (let i = 5 * page; i < this.end; i += 1) {
       tableContent.push(
         <tr>
           <th scope="row">{i + 1}</th>
-          <td>
+          <td style={{width:'30%'}}>
             <div className="media align-items-center">
               <div className="media-body">
                 <span className="mb-0 text-sm">{skills[i].skill}</span>
               </div>
             </div>
           </td>
-          <td>{100}</td>
-          <td>{skills[i].state ? 'Active' : 'Inactive'}</td>
-          <td>
+          <td style={{width:'20%'}}>{skills[i].used}</td>
+          <td style={{width:'20%'}}>{skills[i].state ? 'Active' : 'Inactive'}</td>
+          <td style={{width:'30%'}}>
             <button
               type="button"
               className="btn btn-primary"
@@ -109,50 +116,55 @@ class SkillsView extends React.Component {
                 skills[i].id,
                 skills[i].skill
               )}
-            >Rename</button>
+            >
+              Rename
+            </button>
 
-            {skills[i].state ? 
-
-            <button
-            type="button"
-              className="btn btn-danger"
-              onClick={this.hanleUpdateState.bind(
-                this,
-                skills[i].id,
-                skills[i].state
-              )}
-              style={{width: '100px'}}
-            >Inactive</button> :
-            <button
-            type="button"
-              className="btn btn-success"
-              onClick={this.hanleUpdateState.bind(
-                this,
-                skills[i].id,
-                skills[i].state
-              )}
-              style={{width: '100px'}}
-
-            >Active</button>
-          }
+            {skills[i].state ? (
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={this.hanleUpdateState.bind(
+                  this,
+                  skills[i].id,
+                  skills[i].state
+                )}
+                style={{ width: '100px' }}
+              >
+                Inactive
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="btn btn-success"
+                onClick={this.hanleUpdateState.bind(
+                  this,
+                  skills[i].id,
+                  skills[i].state
+                )}
+                style={{ width: '100px' }}
+              >
+                Active
+              </button>
+            )}
           </td>
         </tr>
       );
     }
 
     for (let i = 0; i < skills.length / 5; i += 1) {
-      if (i === page){
+      if (i === page) {
         pagination.push(
-        <li className="page-item active">
-          <button
-            className="page-link"
-            type="button"
-            onClick={this.handleClickPage.bind(this, i)}
-          >
-            {i + 1}
-          </button>
-        </li>
-      );
+          <li className="page-item active">
+            <button
+              className="page-link"
+              type="button"
+              onClick={this.handleClickPage.bind(this, i)}
+            >
+              {i + 1}
+            </button>
+          </li>
+        );
       } else {
         pagination.push(
           <li className="page-item">
@@ -166,13 +178,12 @@ class SkillsView extends React.Component {
           </li>
         );
       }
-      
     }
 
     return (
       <div className="main-content">
-        <Header isDisplay={1}/>
-        
+        <Header isDisplay={1} />
+
         <div className="container-fluid mt--7">
           <div className="row">
             <div className="col">
@@ -232,7 +243,8 @@ class SkillsView extends React.Component {
                           <span className="sr-only">Previous</span>
                         </a>
                       </li>
-                      {pagination}<li className="page-item">
+                      {pagination}
+                      <li className="page-item">
                         <a className="page-link" href="/">
                           <i className="fas fa-angle-right" />
                           <span className="sr-only">Next</span>
@@ -244,8 +256,8 @@ class SkillsView extends React.Component {
               </div>
             </div>
           </div>
-          <Footer/>
-          </div>
+          <Footer />
+        </div>
 
         {/* Model */}
         <div
@@ -323,7 +335,7 @@ const mapDispatchToProps = dispatch =>
       fetchAddSkillAction: fetchAddSkill,
       updateSkillStatusAction: fetchUpdateSkillStatus,
       updateSkillNameAction: fetchUpdateSkillName,
-      fetchChangePage: changePage,
+      fetchChangePage: changePage
     },
     dispatch
   );

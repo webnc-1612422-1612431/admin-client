@@ -53,9 +53,11 @@ export function fetchPostUpdateProfile(id, image) {
           );
           console.log(localStorage.getItem('user'));
           dispatch(UpdatePhotoSuccess(res.data.user));
+          return true;
         })
         .catch(() => {
           // dispatch(UpdateFail("Cập nhật thông tin không thành công"));
+          return false;
         });
     });
   };
